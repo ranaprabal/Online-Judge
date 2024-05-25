@@ -1,1 +1,0 @@
-// auth, isUser, isProblemSetter && isAdmin
