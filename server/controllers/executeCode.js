@@ -20,6 +20,18 @@ const executeCpp = (filePath) => {
         error && reject({ error, stderr })
         stderr && reject(stderr)
         resolve(stdout)
+        if (!(error || stderr)) {
+          fs.unlink(filePath, (err) => {
+            if (err) console.error(`Error deleting file: ${filePath}`, err)
+          })
+          fs.unlink(outPath, (err) => {
+            if (err) console.error(`Error deleting file: ${outPath}`, err)
+          })
+        } else {
+          fs.unlink(filePath, (err) => {
+            if (err) console.error(`Error deleting file: ${filePath}`, err)
+          })
+        }
       }
     )
   })
