@@ -16,7 +16,8 @@ if (!fs.existsSync(dirCodes)) {
 
 const generateFile = async (format, code) => {
   //generate unique id for the file name
-  const jobId = uuid()
+  // const jobId = uuid()
+  const jobId = "Main"
 
   //generate unique file name
   const fileName = `${jobId}.${format}`
