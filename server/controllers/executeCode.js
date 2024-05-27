@@ -2,7 +2,7 @@ const { exec } = require("child_process")
 const fs = require("fs")
 const path = require("path")
 
-const executeCpp = (filePath) => {
+const executeCpp = (filePath, input) => {
   // create a output folder
   const outputPath = path.join(__dirname, "outputs")
 
@@ -17,11 +17,15 @@ const executeCpp = (filePath) => {
   //create output path
   const outPath = path.join(outputPath, `${jobId}.out`)
 
+  // console.log(input)
+
   // const command = `g++ ${filePath} -o ${outPath} && cd ${outputPath} && ./${jobId}.out`
   //return promise based on the output
   return new Promise((resolve, reject) => {
     exec(
-      `g++ ${filePath} -o ${outPath} && cd ${outputPath} && ${jobId}.out`,
+      input
+        ? `g++ ${filePath} -o ${outPath} && echo ${input} | ${outPath}`
+        : `g++ ${filePath} -o ${outPath} && cd ${outputPath} && ${jobId}.out`,
       (error, stdout, stderr) => {
         error && reject({ error, stderr })
         stderr && reject(stderr)
@@ -43,22 +47,25 @@ const executeCpp = (filePath) => {
   })
 }
 
-const executePy = (filePath) => {
+const executePy = (filePath, input) => {
   //return promise based on the output
   return new Promise((resolve, reject) => {
-    exec(`python ${filePath}`, (error, stdout, stderr) => {
-      error && reject({ error, stderr })
-      stderr && reject(stderr)
-      resolve(stdout)
+    exec(
+      input ? `echo ${input} | python ${filePath}` : `python ${filePath}`,
+      (error, stdout, stderr) => {
+        error && reject({ error, stderr })
+        stderr && reject(stderr)
+        resolve(stdout)
 
-      fs.unlink(filePath, (err) => {
-        if (err) console.error(`Error deleting file: ${filePath}`, err)
-      })
-    })
+        fs.unlink(filePath, (err) => {
+          if (err) console.error(`Error deleting file: ${filePath}`, err)
+        })
+      }
+    )
   })
 }
 
-const executeJava = (filePath) => {
+const executeJava = (filePath, input) => {
   // create a output folder
   const outputPath = path.join(__dirname, "outputs")
 
@@ -77,7 +84,9 @@ const executeJava = (filePath) => {
   //return promise based on the output
   return new Promise((resolve, reject) => {
     exec(
-      `javac ${filePath} -d ${outputPath} && java -cp ${outputPath} ${jobId}`,
+      input
+        ? `javac ${filePath} -d ${outputPath} && echo ${input} | java -cp ${outputPath} ${jobId}`
+        : `javac ${filePath} -d ${outputPath} && java -cp ${outputPath} ${jobId}`,
       (error, stdout, stderr) => {
         error && reject({ error, stderr })
         stderr && reject(stderr)

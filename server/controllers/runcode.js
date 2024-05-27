@@ -18,11 +18,11 @@ exports.runcode = async (req, res) => {
       let output
 
       if (lang == "cpp") {
-        output = await executeCpp(filePath)
+        output = await executeCpp(filePath, input)
       } else if (lang == "py") {
-        output = await executePy(filePath)
+        output = await executePy(filePath, input)
       } else if (lang == "java") {
-        output = await executeJava(filePath)
+        output = await executeJava(filePath, input)
       } else {
         console.log("NO other language supported")
       }
