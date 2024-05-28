@@ -2,7 +2,7 @@ const { exec } = require("child_process")
 const fs = require("fs")
 const path = require("path")
 
-const executeCpp = (filePath, input) => {
+const compileCpp = (filePath) => {
   // create a output folder
   const outputPath = path.join(__dirname, "outputs")
 
@@ -22,43 +22,20 @@ const executeCpp = (filePath, input) => {
   // const command = `g++ ${filePath} -o ${outPath} && cd ${outputPath} && ./${jobId}.out`
   //return promise based on the output
   return new Promise((resolve, reject) => {
-    exec(
-      input
-        ? `g++ ${filePath} -o ${outPath} && echo ${input} | ${outPath}`
-        : `g++ ${filePath} -o ${outPath} && cd ${outputPath} && ${jobId}.out`,
-      (error, stdout, stderr) => {
-        error && reject({ error, stderr })
-        stderr && reject(stderr)
-        resolve(stdout)
-        if (!(error || stderr)) {
-          fs.unlink(filePath, (err) => {
-            if (err) console.error(`Error deleting file1: ${filePath}`, err)
-          })
-          fs.unlink(outPath, (err) => {
-            if (err) console.error(`Error deleting file2: ${outPath}`, err)
-          })
-        } else {
-          fs.unlink(filePath, (err) => {
-            if (err) console.error(`Error deleting file3: ${filePath}`, err)
-          })
-        }
-      }
-    )
+    exec(`g++ ${filePath} -o ${outPath}`, (error, stdout, stderr) => {
+      error && reject({ error, stderr })
+      stderr && reject(stderr)
+      resolve(stdout)
+    })
   })
 }
 
-const executePy = (filePath, input) => {
+const compilePy = (filePath, input) => {
   //return promise based on the output
   return new Promise((resolve, reject) => {
     exec(
       input ? `echo ${input} | python ${filePath}` : `python ${filePath}`,
       (error, stdout, stderr) => {
-        console.log("1")
-        console.log(error)
-        console.log("1")
-        console.log(stderr)
-        console.log("1")
-        console.log(stdout)
         error && reject({ error, stderr })
         stderr && reject(stderr)
         resolve(stdout)
@@ -71,7 +48,7 @@ const executePy = (filePath, input) => {
   })
 }
 
-const executeJava = (filePath, input) => {
+const compileJava = (filePath, input) => {
   // create a output folder
   const outputPath = path.join(__dirname, "outputs")
 
@@ -114,4 +91,4 @@ const executeJava = (filePath, input) => {
   })
 }
 
-module.exports = { executeCpp, executePy, executeJava }
+module.exports = { compileCpp, compilePy, compileJava }

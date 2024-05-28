@@ -3,7 +3,7 @@ const { executeCpp, executePy, executeJava } = require("./executeCode")
 
 exports.runcode = async (req, res) => {
   try {
-    const { code, lang = "cpp", input } = req.body
+    const { code, language = "cpp", input } = req.body
 
     //   check if code exits
     if (code == undefined) {
@@ -14,17 +14,17 @@ exports.runcode = async (req, res) => {
     }
     try {
       //we need to generate the file and we need to send the response
-      const filePath = await generateFile(lang, code)
+      const filePath = await generateFile(language, code)
       let output
 
-      if (lang == "cpp") {
+      if (language == "cpp") {
         output = await executeCpp(filePath, input)
-      } else if (lang == "py") {
+      } else if (language == "py") {
         output = await executePy(filePath, input)
-      } else if (lang == "java") {
+      } else if (language == "java") {
         output = await executeJava(filePath, input)
       } else {
-        console.log("NO other language supported")
+        console.log("NO other languageuage supported")
       }
 
       return res.json({ filePath, output })

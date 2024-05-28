@@ -13,35 +13,43 @@ const problemSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  inputFormat: {
+    type: String,
+    required: true,
+  },
+  outputFormat: {
+    type: String,
+    required: true,
+  },
   constraints: {
     type: String,
-  },
-  exampleInput: {
-    type: String,
     required: true,
   },
-  exampleOutput: {
-    type: String,
-    required: true,
-  },
+  examples: [
+    {
+      input: { type: String, required: true },
+      output: { type: String, required: true },
+    },
+  ],
   createdOn: {
     type: Date,
-    default: now(),
+    default: Date.now(),
   },
   testcases: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "testcasesSchema",
+      ref: "testcaseSchema",
     },
   ],
   setterId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "userSchema",
   },
-  tags: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "tagsSchema",
-  },
+  tags: [
+    {
+      type: String,
+    },
+  ],
   difficulty: {
     type: String,
     enum: ["Easy", "Medium", "Hard"],

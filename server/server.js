@@ -21,8 +21,12 @@ dbConnect()
 // import routes
 const auth = require("./routes/auth")
 const runcode = require("./routes/runcode")
+const problem = require("./routes/problem")
+const submission = require("./routes/submission")
 app.use("/api", auth)
 app.use("/api", runcode)
+app.use("/api", problem)
+app.use("/api", submission)
 
 //activate the app
 app.listen(PORT, () => {
