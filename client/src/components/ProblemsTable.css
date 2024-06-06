@@ -1,0 +1,23 @@
+.problems-container {
+  margin: 20px;
+}
+
+.problems-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.problems-table th,
+.problems-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.problems-table th {
+  background-color: #f2f2f2;
+  text-align: left;
+}
+
+.error-message {
+  color: red;
+}

@@ -1,6 +1,9 @@
 //import express
 const express = require("express")
 
+//import cors
+const cors = require("cors")
+
 //create app
 const app = express()
 
@@ -13,6 +16,7 @@ const PORT = process.env.PORT || 8000
 //to read data from json
 app.use(express.urlencoded())
 app.use(express.json())
+app.use(cors())
 
 //connect to database
 const dbConnect = require("./config/database")

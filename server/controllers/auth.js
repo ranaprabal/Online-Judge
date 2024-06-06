@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs")
-const userSchema = require("../Models/userSchema")
 const jwt = require("jsonwebtoken")
+const userSchema = require("../Models2/userSchema")
 require("dotenv").config()
 
 //signup route handler

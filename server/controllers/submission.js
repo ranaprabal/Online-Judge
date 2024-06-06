@@ -1,5 +1,5 @@
-const submissionSchema = require("../Models/submissionSchema")
-const problemSchema = require("../Models/problemSchema")
+const submissionSchema = require("../Models2/submissionSchema")
+const problemSchema = require("../Models2/problemSchema")
 const { generateFile } = require("./generateFile")
 const { executeCpp, executePy, executeJava } = require("./executeCode")
 
@@ -37,21 +37,21 @@ exports.createSubmission = async (req, res) => {
         const filePath = await generateFile(language, code)
         let runResult
         if (language == "cpp") {
-          runResult = await executeCpp(filePath, testCase.inputData)
+          runResult = await executeCpp(filePath, testCase.input)
         } else if (language == "py") {
-          runResult = await executePy(filePath, testCase.inputData)
+          runResult = await executePy(filePath, testCase.input)
         } else if (language == "java") {
-          runResult = await executeJava(filePath, testCase.inputData)
+          runResult = await executeJava(filePath, testCase.input)
         }
 
         console.log(runResult)
 
-        if (runResult.trim() != testCase.expectedOutput.trim()) {
+        if (runResult.trim() != testCase.output.trim()) {
           console.log("hello")
           allPassed = false
           submission.status = "Completed"
           submission.verdict = "Wrong Answer"
-          submission.result = `Test case failed: ${testCase.inputData} -> Expected: ${testCase.expectedOutput}, Got: ${runResult.output}`
+          submission.result = `Test case failed: ${testCase.input} -> Expected: ${testCase.output}, Got: ${runResult.output}`
           break
         }
 

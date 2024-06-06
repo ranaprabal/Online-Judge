@@ -1,5 +1,4 @@
-const problemSchema = require("../Models/problemSchema")
-const testcaseSchema = require("../Models/testcaseSchema")
+const problemSchema = require("../Models2/problemSchema")
 
 exports.createProblem = async (req, res) => {
   try {
@@ -17,7 +16,7 @@ exports.createProblem = async (req, res) => {
       testcases,
     } = req.body
 
-    const problem = new problemSchema({
+    const problem = await problemSchema.create({
       title,
       img,
       description,
@@ -28,19 +27,21 @@ exports.createProblem = async (req, res) => {
       difficulty,
       tags,
       setterId,
+      testcases,
     })
 
-    await problem.save()
+    console.log(testcases)
+    console.log()
 
-    const createdTestCases = await testcaseSchema.insertMany(
-      testcases.map((tc) => ({
-        ...tc,
-        problem: problem._id,
-      }))
-    )
+    // const createdTestCases = await testcaseSchema.insertMany(
+    //   testcases.map((tc) => ({
+    //     ...tc,
+    //     problem: problem._id,
+    //   }))
+    // )
 
-    problem.testcases = createdTestCases.map((tc) => tc._id)
-    await problem.save()
+    // problem.testcases = createdTestCases.map((tc) => tc._id)
+    // await problem.save()
 
     return res.status(201).json({
       success: true,

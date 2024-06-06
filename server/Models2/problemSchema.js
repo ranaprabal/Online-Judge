@@ -37,8 +37,8 @@ const problemSchema = new mongoose.Schema({
   },
   testcases: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "testcaseSchema",
+      input: { type: String, required: true },
+      output: { type: String, required: true },
     },
   ],
   setterId: {
