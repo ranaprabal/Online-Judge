@@ -7,9 +7,7 @@ exports.createSubmission = async (req, res) => {
   const { problemId, userId, code, language = "cpp" } = req.body
 
   try {
-    const problem = await problemSchema
-      .findById(problemId)
-      .populate("testcases")
+    const problem = await problemSchema.findById(problemId)
     if (!problem) {
       return res.status(404).json({
         success: false,
@@ -32,9 +30,11 @@ exports.createSubmission = async (req, res) => {
     let allPassed = true
     let totalTime = 0
     let totalMemory = 0
+    let totalTestcasePassed = 1
     try {
+      const filePath = await generateFile(language, code)
+
       for (const testCase of problem.testcases) {
-        const filePath = await generateFile(language, code)
         let runResult
         if (language == "cpp") {
           runResult = await executeCpp(filePath, testCase.input)
@@ -44,17 +44,16 @@ exports.createSubmission = async (req, res) => {
           runResult = await executeJava(filePath, testCase.input)
         }
 
-        console.log(runResult)
-
         if (runResult.trim() != testCase.output.trim()) {
-          console.log("hello")
+          console.log(runResult, testCase.output)
           allPassed = false
           submission.status = "Completed"
           submission.verdict = "Wrong Answer"
           submission.result = `Test case failed: ${testCase.input} -> Expected: ${testCase.output}, Got: ${runResult.output}`
+          submission.passedTestcase = totalTestcasePassed
           break
         }
-
+        totalTestcasePassed += 1
         //   totalTime += runResult.time
         //   totalMemory += runResult.memory
       }
@@ -70,6 +69,7 @@ exports.createSubmission = async (req, res) => {
       submission.status = "Completed"
       submission.verdict = "Accepted"
       submission.result = "All test cases passed"
+      submission.passedTestcase = totalTestcasePassed
       //   submission.runtime = totalTime
       //   submission.memoryUsed = totalMemory
     }
@@ -81,14 +81,34 @@ exports.createSubmission = async (req, res) => {
 
     return res.status(201).json({
       success: true,
-      and: submission,
+      data: submission,
       message: "Submission successful",
     })
   } catch (error) {
     return res.status(400).json({
       success: false,
-      and: submission,
       message: "Can not submit currently",
+    })
+  }
+}
+
+exports.showProblemSubmissions = async (req, res) => {
+  try {
+    const { userId, problemId } = req.query
+
+    const submission = await submissionSchema.find({ userId, problemId })
+
+    return res.status(201).json({
+      success: true,
+      data: submission,
+      message: "Submissions fetched successful",
+    })
+  } catch (error) {
+    // Handle errors
+    console.error(error)
+    return res.status(500).json({
+      success: false,
+      message: "error in Submissions fetching",
     })
   }
 }

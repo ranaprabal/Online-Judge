@@ -1,11 +1,15 @@
-// src/components/ProblemsTable.js
 import React, { useEffect, useState } from "react"
 import axios from "axios"
+import Cookies from "js-cookie"
+import { jwtDecode } from "jwt-decode" // Correct import of jwtDecode
+import { Link, useNavigate } from "react-router-dom" // Import Link and useNavigate from React Router
 import "./ProblemsTable.css"
 
 const ProblemsTable = () => {
   const [problems, setProblems] = useState([])
   const [error, setError] = useState(null)
+  const [userRole, setUserRole] = useState("")
+  const navigate = useNavigate() // Use useNavigate for programmatic navigation
 
   useEffect(() => {
     const fetchProblems = async () => {
@@ -20,12 +24,28 @@ const ProblemsTable = () => {
       }
     }
     fetchProblems()
+
+    // Retrieve user ID from the token
+    const token = Cookies.get("token")
+    if (token) {
+      const decodedToken = jwtDecode(token)
+      setUserRole(decodedToken.accountType)
+    }
   }, [])
+
+  const handleCreateProblem = () => {
+    navigate("/create-problem")
+  }
 
   return (
     <div className="problems-container">
-      <h2>Problems List</h2>
       {error && <p style={{ color: "red" }}>{error}</p>}
+      {userRole === "Problem Setter" && (
+        <button onClick={handleCreateProblem} className="create-problem-button">
+          Create Problem
+        </button>
+      )}
+      <h2>Problems List</h2>
       <table className="problems-table">
         <thead>
           <tr>
@@ -37,7 +57,10 @@ const ProblemsTable = () => {
         <tbody>
           {problems.map((problem) => (
             <tr key={problem._id}>
-              <td>{problem.title}</td>
+              <td>
+                {/* Make the title clickable and redirect to problem/:id */}
+                <Link to={`/problem/${problem._id}`}>{problem.title}</Link>
+              </td>
               <td>{problem.difficulty}</td>
               <td>{problem.tags.join(", ")}</td>
             </tr>

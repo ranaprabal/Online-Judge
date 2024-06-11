@@ -37,13 +37,23 @@ const submissionSchema = new mongoose.Schema({
   },
   verdict: {
     type: String,
-    enum: ["Accepted", "Wrong Answer", "Runtime Error", "Time Limit Exceeded"],
+    enum: [
+      "Accepted",
+      "Wrong Answer",
+      "Runtime Error",
+      "Time Limit Exceeded",
+      "Failed",
+    ],
+    default: "Failed",
   },
   memoryUsed: {
     type: Number, //kilobytes
   },
   runtime: {
     type: Number, //milliseconds
+  },
+  passedTestcase: {
+    type: Number,
   },
 })
 

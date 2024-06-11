@@ -30,13 +30,19 @@ exports.runcode = async (req, res) => {
       return res.json({ filePath, output })
     } catch (error) {
       res.status(500).json({
-        error: error,
+        error: error.toString(), // Convert error object to string
+        stderr: error.stderr ? error.stderr.toString() : "", // Convert stderr to string
         success: false,
-        message: "Error file generating file or executing file",
+        message: "Error generating file or executing file",
       })
     }
   } catch (error) {
     console.error(error)
     console.log("could not run the code")
+    res.status(500).json({
+      success: false,
+      error: error.toString(),
+      message: "Internal server error",
+    })
   }
 }

@@ -30,10 +30,6 @@ const userSchema = new mongoose.Schema({
     enum: ["User", "Problem Setter", "Admin"],
     required: true,
   },
-  profileId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "profileSchema",
-  },
   solvedProblems: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -46,6 +42,26 @@ const userSchema = new mongoose.Schema({
       ref: "problemSchema",
     },
   ],
+  image: {
+    type: String,
+    default:
+      "https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg",
+  },
+  DOB: {
+    type: Date,
+  },
+  about: {
+    type: String,
+  },
+  organisation: {
+    type: String,
+  },
+  phoneNumber: {
+    type: String,
+  },
+  country: {
+    type: String,
+  },
 })
 
 module.exports = mongoose.model("userSchema", userSchema)

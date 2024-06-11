@@ -10,14 +10,19 @@
 .problems-table th,
 .problems-table td {
   border: 1px solid #ddd;
+  text-align: center;
   padding: 8px;
 }
 
 .problems-table th {
   background-color: #f2f2f2;
-  text-align: left;
+  text-align: center;
 }
 
 .error-message {
   color: red;
+}
+
+.create-problem-button {
+  place-items: center;
 }

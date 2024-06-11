@@ -117,6 +117,7 @@ exports.login = async (req, res) => {
         registeredUser,
         message: "user Logged in successfully",
       })
+      // console.log("cookie set:", res.getHeaders()["set-cookie"])
     } else {
       //password is not matched
       return res

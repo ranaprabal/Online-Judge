@@ -27,21 +27,25 @@ const executeCpp = (filePath, input) => {
         ? `g++ ${filePath} -o ${outPath} && echo ${input} | ${outPath}`
         : `g++ ${filePath} -o ${outPath} && cd ${outputPath} && ${jobId}.out`,
       (error, stdout, stderr) => {
-        error && reject({ error, stderr })
-        stderr && reject(stderr)
-        resolve(stdout)
-        if (!(error || stderr)) {
-          fs.unlink(filePath, (err) => {
-            if (err) console.error(`Error deleting file1: ${filePath}`, err)
-          })
-          fs.unlink(outPath, (err) => {
-            if (err) console.error(`Error deleting file2: ${outPath}`, err)
-          })
+        if (error) {
+          reject({ error: error.toString(), stderr: stderr.toString() })
+        } else if (stderr) {
+          reject(stderr.toString())
         } else {
-          fs.unlink(filePath, (err) => {
-            if (err) console.error(`Error deleting file3: ${filePath}`, err)
-          })
+          resolve(stdout)
         }
+        // if (!(error || stderr)) {
+        //   fs.unlink(filePath, (err) => {
+        //     if (err) console.error(`Error deleting file1: ${filePath}`, err)
+        //   })
+        //   fs.unlink(outPath, (err) => {
+        //     if (err) console.error(`Error deleting file2: ${outPath}`, err)
+        //   })
+        // } else {
+        //   fs.unlink(filePath, (err) => {
+        //     if (err) console.error(`Error deleting file3: ${filePath}`, err)
+        //   })
+        // }
       }
     )
   })
@@ -53,19 +57,17 @@ const executePy = (filePath, input) => {
     exec(
       input ? `echo ${input} | python ${filePath}` : `python ${filePath}`,
       (error, stdout, stderr) => {
-        console.log("1")
-        console.log(error)
-        console.log("1")
-        console.log(stderr)
-        console.log("1")
-        console.log(stdout)
-        error && reject({ error, stderr })
-        stderr && reject(stderr)
-        resolve(stdout)
+        if (error) {
+          reject({ error: error.toString(), stderr: stderr.toString() })
+        } else if (stderr) {
+          reject(stderr.toString())
+        } else {
+          resolve(stdout)
+        }
 
-        fs.unlink(filePath, (err) => {
-          if (err) console.error(`Error deleting file: ${filePath}`, err)
-        })
+        // fs.unlink(filePath, (err) => {
+        //   if (err) console.error(`Error deleting file: ${filePath}`, err)
+        // })
       }
     )
   })
@@ -94,21 +96,25 @@ const executeJava = (filePath, input) => {
         ? `javac ${filePath} -d ${outputPath} && echo ${input} | java -cp ${outputPath} ${jobId}`
         : `javac ${filePath} -d ${outputPath} && java -cp ${outputPath} ${jobId}`,
       (error, stdout, stderr) => {
-        error && reject({ error, stderr })
-        stderr && reject(stderr)
-        resolve(stdout)
-        if (!(error || stderr)) {
-          fs.unlink(filePath, (err) => {
-            if (err) console.error(`Error deleting file: ${filePath}`, err)
-          })
-          fs.unlink(deletingPath, (err) => {
-            if (err) console.error(`Error deleting file: ${deletingPath}`, err)
-          })
+        if (error) {
+          reject({ error: error.toString(), stderr: stderr.toString() })
+        } else if (stderr) {
+          reject(stderr.toString())
         } else {
-          fs.unlink(filePath, (err) => {
-            if (err) console.error(`Error deleting file: ${filePath}`, err)
-          })
+          resolve(stdout)
         }
+        // if (!(error || stderr)) {
+        //   fs.unlink(filePath, (err) => {
+        //     if (err) console.error(`Error deleting file: ${filePath}`, err)
+        //   })
+        //   fs.unlink(deletingPath, (err) => {
+        //     if (err) console.error(`Error deleting file: ${deletingPath}`, err)
+        //   })
+        // } else {
+        //   fs.unlink(filePath, (err) => {
+        //     if (err) console.error(`Error deleting file: ${filePath}`, err)
+        //   })
+        // }
       }
     )
   })

@@ -1,4 +1,4 @@
-.login-container {
+.signup-container {
   box-sizing: border-box;
   width: 400px;
   margin: 0 auto;
@@ -9,35 +9,35 @@
   align-items: center;
 }
 
-.login-container h2 {
+.signup-container h2 {
   text-align: center;
   margin-bottom: 20px;
   color: #333;
 }
 
-.login-container form {
+.signup-container form {
   display: flex;
   flex-direction: column;
 }
 
-.login-container form div {
+.signup-container form div {
   margin-bottom: 15px;
 }
 
-.login-container form label {
+.signup-container form label {
   margin-bottom: 5px;
   font-weight: bold;
 }
 
-.login-container form input[type="email"],
-.login-container form input[type="password"] {
+.signup-container form input[type="email"],
+.signup-container form input[type="password"] {
   width: 90%;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 3px;
 }
 
-.login-container form button[type="submit"] {
+.signup-container form button[type="submit"] {
   width: 100%;
   padding: 10px;
   background-color: #007bff;
@@ -48,6 +48,6 @@
   transition: background-color 0.3s ease;
 }
 
-.login-container form button[type="submit"]:hover {
+.signup-container form button[type="submit"]:hover {
   background-color: #0056b3;
 }

@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import axios from "axios"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import "./signup.css"
 
 const Signup = () => {
   const [fName, setFName] = useState("")
@@ -33,7 +34,7 @@ const Signup = () => {
   }
 
   return (
-    <div>
+    <div className="signup-container">
       <h2>Signup</h2>
       <form onSubmit={handleSubmit}>
         <div>
@@ -86,6 +87,13 @@ const Signup = () => {
         <button type="submit">Signup</button>
         {error && <p style={{ color: "red" }}>{error}</p>}
       </form>
+      <div className="login-button">
+        <br></br>
+        Already registered?{" "}
+        <Link to="/login">
+          <button>login</button>
+        </Link>
+      </div>
     </div>
   )
 }

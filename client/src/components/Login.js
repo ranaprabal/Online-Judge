@@ -1,7 +1,8 @@
 // src/components/Login.js
 import React, { useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
 import axios from "axios"
-import { useNavigate } from "react-router-dom"
+import Cookies from "js-cookie" // Add this import for managing cookies
 import "./Login.css"
 
 const Login = () => {
@@ -17,6 +18,10 @@ const Login = () => {
         password,
       })
       console.log(response.data) // Handle response data as needed
+
+      // Set the token in the cookies
+      Cookies.set("token", response.data.token, { expires: 1 }) // 1 day
+
       navigate("/allProblems") // Redirect after successful login
     } catch (error) {
       console.error("Login failed:", error.response?.data || error.message)
@@ -47,6 +52,13 @@ const Login = () => {
         </div>
         <button type="submit">Login</button>
       </form>
+      <div className="signup-button">
+        <br></br>
+        New User?{" "}
+        <Link to="/signup">
+          <button>Signup</button>
+        </Link>
+      </div>
     </div>
   )
 }

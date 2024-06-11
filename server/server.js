@@ -27,10 +27,12 @@ const auth = require("./routes/auth")
 const runcode = require("./routes/runcode")
 const problem = require("./routes/problem")
 const submission = require("./routes/submission")
+const user = require("./routes/user")
 app.use("/api", auth)
 app.use("/api", runcode)
 app.use("/api", problem)
 app.use("/api", submission)
+app.use("/api", user)
 
 //activate the app
 app.listen(PORT, () => {
