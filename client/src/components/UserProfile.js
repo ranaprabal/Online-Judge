@@ -29,7 +29,7 @@ const UserProfile = () => {
   const fetchUserProfile = async (userId) => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/api/getUser/${userId}`
+        `http://13.233.90.59:8000/api/getUser/${userId}`
       )
       const userData = response.data.data
       setUser(userData)
@@ -61,7 +61,7 @@ const UserProfile = () => {
         const decodedToken = jwtDecode(token)
         const userId = decodedToken.id
         await axios.put(
-          `http://localhost:8000/api/updateDetails/${userId}`,
+          `http://13.233.90.59:8000/api/updateDetails/${userId}`,
           formData
         )
         fetchUserProfile(decodedToken.id)

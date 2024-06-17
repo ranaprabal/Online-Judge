@@ -19,7 +19,7 @@ const SubmissionsTable = () => {
     const fetchProblemDetails = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8000/api/problem/${problemId}`
+          `http://13.233.90.59:8000/api/problem/${problemId}`
         )
         console.log(response.data.problem.title)
 
@@ -44,7 +44,7 @@ const SubmissionsTable = () => {
     const fetchSubmissions = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8000/api/showProblemSubmissions",
+          "http://13.233.90.59:8000/api/showProblemSubmissions",
           { params: { userId, problemId } }
         )
         setSubmissions(response.data.data)

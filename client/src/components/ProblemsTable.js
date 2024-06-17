@@ -15,7 +15,7 @@ const ProblemsTable = () => {
     const fetchProblems = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8000/api/allProblems"
+          "http://13.233.90.59:8000/api/allProblems"
         )
         setProblems(response.data)
       } catch (err) {

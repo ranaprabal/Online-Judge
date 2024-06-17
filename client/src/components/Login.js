@@ -13,7 +13,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const response = await axios.post("http://localhost:8000/api/login", {
+      const response = await axios.post("http://13.233.90.59:8000/api/login", {
         email,
         password,
       })
@@ -22,6 +22,7 @@ const Login = () => {
 
       navigate("/allProblems")
     } catch (error) {
+      console.log(error)
       console.error("Login failed:", error.response?.data || error.message)
     }
   }

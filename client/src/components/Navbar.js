@@ -14,7 +14,7 @@ const Navbar = () => {
     const fetchUserName = async (email) => {
       try {
         const response = await axios.post(
-          "http://localhost:8000/api/getUserName",
+          "http://13.233.90.59:8000/api/getUserName",
           { email }
         )
         if (response.data.success) {

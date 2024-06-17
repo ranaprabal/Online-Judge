@@ -49,7 +49,7 @@ const CreateProblem = () => {
     e.preventDefault()
     setError(null) // Clear previous errors
     try {
-      const response = await axios.post("http://localhost:8000/api/create", {
+      const response = await axios.post("http://13.233.90.59:8000/api/create", {
         title,
         img,
         description,

@@ -18,7 +18,7 @@ const Signup = () => {
     console.log("Form data:", { fName, lName, email, password, accountType })
 
     try {
-      const response = await axios.post("/api/signup", {
+      const response = await axios.post("http://13.233.90.59:8000/api/signup", {
         fName,
         lName,
         email,

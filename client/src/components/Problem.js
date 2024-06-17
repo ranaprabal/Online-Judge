@@ -23,7 +23,7 @@ const Problem = ({ problemId }) => {
     const fetchProblemDetails = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8000/api/problem/${problemId}`
+          `http://13.233.90.59:8000/api/problem/${problemId}`
         )
         console.log(response.data.problem)
 
@@ -51,11 +51,14 @@ const Problem = ({ problemId }) => {
 
   const handleRun = async () => {
     try {
-      const response = await axios.post("http://localhost:8000/api/runCode", {
-        code,
-        language,
-        input: inputValue,
-      })
+      const response = await axios.post(
+        "http://13.233.90.59:8000/api/runCode",
+        {
+          code,
+          language,
+          input: inputValue,
+        }
+      )
 
       const outputData = response.data.output
       if (typeof outputData === "object") {
@@ -103,7 +106,7 @@ const Problem = ({ problemId }) => {
     try {
       console.log("this is userId: ")
       console.log(userId)
-      const response = await axios.post("http://localhost:8000/api/submit", {
+      const response = await axios.post("http://13.233.90.59:8000/api/submit", {
         problemId,
         userId,
         code,

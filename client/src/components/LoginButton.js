@@ -12,7 +12,7 @@ const LoginButton = () => {
   const handleLogin = async (e) => {
     e.preventDefault()
     try {
-      const response = await axios.post("http://localhost:8000/api/login", {
+      const response = await axios.post("http://13.233.90.59:8000/api/login", {
         email,
         password,
       })
