@@ -1,13 +1,13 @@
-// src/components/Login.js
 import React, { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import axios from "axios"
-import Cookies from "js-cookie" // Add this import for managing cookies
+import Cookies from "js-cookie"
 import "./Login.css"
 
 const Login = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [showPassword, setShowPassword] = useState(false)
   const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
@@ -17,47 +17,54 @@ const Login = () => {
         email,
         password,
       })
-      console.log(response.data) // Handle response data as needed
 
-      // Set the token in the cookies
-      Cookies.set("token", response.data.token, { expires: 1 }) // 1 day
+      Cookies.set("token", response.data.token, { expires: 1 })
 
-      navigate("/allProblems") // Redirect after successful login
+      navigate("/allProblems")
     } catch (error) {
       console.error("Login failed:", error.response?.data || error.message)
     }
   }
 
   return (
-    <div className="login-container">
-      <h2>This is Login Page</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+    <div className="background">
+      <div className="login-container">
+        <h2>Welcome</h2>
+        <img src="fevicon.png" alt="Logo" />
+        <form onSubmit={handleSubmit}>
+          <div>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Email"
+              required
+            />
+          </div>
+          <div style={{ position: "relative" }}>
+            <input
+              type={showPassword ? "text" : "password"}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Password"
+              required
+            />
+            <span
+              className="eye-icon"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? "🙈" : "👁️"}
+            </span>
+          </div>
+          <button type="submit">Login</button>
+        </form>
+        <div className="signup-button">
+          <br></br>
+          Don't have an account?{" "}
+          <Link to="/signup">
+            <button>Sign Up</button>
+          </Link>
         </div>
-        <div>
-          <label>Password:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit">Login</button>
-      </form>
-      <div className="signup-button">
-        <br></br>
-        New User?{" "}
-        <Link to="/signup">
-          <button>Signup</button>
-        </Link>
       </div>
     </div>
   )

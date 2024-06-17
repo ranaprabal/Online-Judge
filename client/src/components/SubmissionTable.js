@@ -21,9 +21,9 @@ const SubmissionsTable = () => {
         const response = await axios.get(
           `http://localhost:8000/api/problem/${problemId}`
         )
-        console.log(response.data.problem)
+        console.log(response.data.problem.title)
 
-        setProblem(response.data.problem)
+        setProblem(response.data.problem.title)
       } catch (error) {
         setError("Failed to fetch problem details.")
       } finally {
@@ -33,7 +33,6 @@ const SubmissionsTable = () => {
 
     fetchProblemDetails()
 
-    // Retrieve user ID from the token
     const token = Cookies.get("token")
     if (token) {
       const decodedToken = jwtDecode(token)
@@ -77,8 +76,9 @@ const SubmissionsTable = () => {
   if (error) return <div>{error}</div>
 
   return (
-    <div>
-      <table>
+    <div className="submissions-container">
+      <h2>Submissions for {problem}</h2>
+      <table className="submissions-table">
         <thead>
           <tr>
             <th>Serial Number</th>
@@ -100,7 +100,7 @@ const SubmissionsTable = () => {
               }
             >
               <td>{index + 1}</td>
-              <td>{problem.title}</td>
+              <td>{problem}</td>
               <td>{submission.verdict}</td>
               <td>{submission.language}</td>
               <td>{submission.submittedAt}</td>

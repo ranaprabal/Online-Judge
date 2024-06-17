@@ -16,6 +16,7 @@ const Problem = ({ problemId }) => {
   const [inputValue, setInputValue] = useState("")
   const [userId, setUserId] = useState("")
   const [testCaseResults, setTestCaseResults] = useState([])
+  const [activeTab, setActiveTab] = useState("input")
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -64,6 +65,7 @@ const Problem = ({ problemId }) => {
       }
 
       setVerdict("Run Successful")
+      setActiveTab("output")
     } catch (error) {
       const errorResponse = error.response?.data
       const errorMessage = errorResponse?.error || "Error in code execution"
@@ -93,6 +95,7 @@ const Problem = ({ problemId }) => {
 
       setOutput(`Stderr: \n${errorLineMessage}`)
       setVerdict("code has some error")
+      setActiveTab("output")
     }
   }
 
@@ -127,10 +130,12 @@ const Problem = ({ problemId }) => {
         }
       })
       setTestCaseResults(testCaseStatuses)
+      setActiveTab("verdict")
     } catch (error) {
       console.log(error)
       setOutput(error.response?.data?.error || "Error in submission")
       setVerdict("Submission Failed")
+      setActiveTab("verdict")
     }
   }
 
@@ -145,17 +150,17 @@ const Problem = ({ problemId }) => {
           My Submissions
         </button>
         <p>
-          <strong>Description:</strong> {problem.description}
+          <strong>Description</strong> {problem.description}
         </p>
         {problem.image && <img src={problem.image} alt="Problem visual" />}
         <p>
-          <strong>Input Format:</strong> {problem.inputFormat}
+          <strong>Input Format</strong> {problem.inputFormat}
         </p>
         <p>
-          <strong>Output Format:</strong> {problem.outputFormat}
+          <strong>Output Format</strong> {problem.outputFormat}
         </p>
         <p>
-          <strong>Constraints:</strong> {problem.constraints}
+          <strong>Constraints</strong> {problem.constraints}
         </p>
         <div className="examples">
           <h3>Example Inputs and Outputs</h3>
@@ -163,10 +168,12 @@ const Problem = ({ problemId }) => {
             problem.examples.map((example, index) => (
               <div key={index}>
                 <p>
-                  <strong>Input {index + 1}:</strong> {example.input}
+                  <strong>Input {index + 1}</strong>
+                  <pre className="example-input">{example.input}</pre>
                 </p>
                 <p>
-                  <strong>Output {index + 1}:</strong> {example.output}
+                  <strong>Output {index + 1}</strong>
+                  <pre className="example-output">{example.output}</pre>
                 </p>
               </div>
             ))
@@ -185,7 +192,7 @@ const Problem = ({ problemId }) => {
       <div className="code-submission">
         <div className="language-select">
           <label>
-            <pre>Language: </pre>
+            Language:{" "}
             <select
               value={language}
               onChange={(e) => setLanguage(e.target.value)}
@@ -203,51 +210,70 @@ const Problem = ({ problemId }) => {
           rows={20}
           cols={50}
         ></textarea>
-        <div>
-          <label>
-            Input:
-            <textarea
-              type="text"
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              rows={4}
-              cols={50}
-              placeholder="Your Inputs Here....."
-            />
-          </label>
+
+        <div className="tab-container">
+          <div className="tab-buttons">
+            <button
+              className={activeTab === "input" ? "active" : ""}
+              onClick={() => setActiveTab("input")}
+            >
+              Input
+            </button>
+            <button
+              className={activeTab === "output" ? "active" : ""}
+              onClick={() => setActiveTab("output")}
+            >
+              Output
+            </button>
+            <button
+              className={activeTab === "verdict" ? "active" : ""}
+              onClick={() => setActiveTab("verdict")}
+            >
+              Verdict
+            </button>
+          </div>
+          <div className="tab-content">
+            {activeTab === "input" && (
+              <div>
+                <textarea
+                  type="text"
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  rows={4}
+                  cols={50}
+                  placeholder="Your Inputs Here....."
+                />
+              </div>
+            )}
+            {activeTab === "output" && (
+              <div className="output-tab">
+                <pre>{output}</pre>
+              </div>
+            )}
+            {activeTab === "verdict" && (
+              <div>
+                <h3>Verdict:</h3>
+                <pre>{verdict}</pre>
+                <div className="test-case-results">
+                  <h3>Test Case Results:</h3>
+                  <div className="test-case-buttons">
+                    {testCaseResults.map((testCase) => (
+                      <button
+                        key={testCase.index}
+                        className={`test-case-button ${testCase.status}`}
+                      >
+                        Test Case {testCase.index}: {testCase.status}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
         <div className="run-submit-buttons">
           <button onClick={handleRun}>Run</button>
           <button onClick={handleSubmit}>Submit</button>
-        </div>
-        <div className="output">
-          <h3>Output:</h3>
-          <pre>{output}</pre>
-          <h3>Verdict:</h3>
-          <pre>{verdict}</pre>
-        </div>
-        <div className="test-case-results">
-          <h3>Test Case Results:</h3>
-          {testCaseResults.map((testCase) => (
-            <p
-              key={testCase.index}
-              style={{
-                color:
-                  testCase.status === "passed"
-                    ? "green"
-                    : testCase.status === "failed"
-                    ? "red"
-                    : "black",
-              }}
-            >
-              Test Case {testCase.index}:{" "}
-              {testCase.status === "passed"
-                ? "Passed"
-                : testCase.status === "failed"
-                ? "Failed"
-                : "Not Tested"}
-            </p>
-          ))}
         </div>
       </div>
     </div>

@@ -1,4 +1,3 @@
-// src/components/Login.js
 import React, { useState } from "react"
 import axios from "axios"
 import Cookies from "js-cookie"
@@ -18,7 +17,7 @@ const LoginButton = () => {
         password,
       })
       Cookies.set("token", response.data.token)
-      navigate("/") // Redirect to home or another page after login
+      navigate("/")
     } catch (err) {
       setError("Invalid credentials")
     }

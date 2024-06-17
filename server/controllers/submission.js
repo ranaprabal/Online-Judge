@@ -6,6 +6,8 @@ const { executeCpp, executePy, executeJava } = require("./executeCode")
 exports.createSubmission = async (req, res) => {
   const { problemId, userId, code, language = "cpp" } = req.body
 
+  console.log("here it is running")
+
   try {
     const problem = await problemSchema.findById(problemId)
     if (!problem) {

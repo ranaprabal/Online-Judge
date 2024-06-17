@@ -34,7 +34,7 @@ const compilePy = (filePath, input) => {
   //return promise based on the output
   return new Promise((resolve, reject) => {
     exec(
-      input ? `echo ${input} | python ${filePath}` : `python ${filePath}`,
+      input ? `echo ${input} | python3 ${filePath}` : `python3 ${filePath}`,
       (error, stdout, stderr) => {
         error && reject({ error, stderr })
         stderr && reject(stderr)

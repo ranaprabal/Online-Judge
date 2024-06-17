@@ -21,7 +21,6 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <ConditionalMainHeading />
         <ConditionalNavbar />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -43,20 +42,16 @@ function App() {
 
 const ConditionalNavbar = () => {
   const location = useLocation()
-  return location.pathname !== "/" ? <Navbar /> : null
-}
-
-const ConditionalMainHeading = () => {
-  const location = useLocation()
-  return location.pathname !== "/" ? (
-    <h1 className="main-heading">Welcome to CodeJury</h1>
-  ) : null
+  const showNavbar =
+    location.pathname === "/allProblems" ||
+    location.pathname.startsWith("/problem") ||
+    location.pathname.startsWith("/getProblemSubmissions")
+  return showNavbar ? <Navbar /> : null
 }
 
 const Home = () => (
   <div className="home-page">
     <div className="welcome-container">
-      <h1>Welcome to CodeJury</h1>
       <p>
         CodeJury is an online judge system designed to help programmers test
         their coding skills. Solve problems, submit solutions, and improve your

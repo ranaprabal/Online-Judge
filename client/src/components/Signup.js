@@ -8,13 +8,13 @@ const Signup = () => {
   const [lName, setLName] = useState("")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const [accountType, setAccountType] = useState("User") // Default to 'User'
+  const [accountType, setAccountType] = useState("User")
   const [error, setError] = useState(null)
   const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    setError(null) // Clear any previous errors
+    setError(null)
     console.log("Form data:", { fName, lName, email, password, accountType })
 
     try {
@@ -25,8 +25,8 @@ const Signup = () => {
         password,
         accountType,
       })
-      console.log("Response data:", response.data) // Check the response data
-      navigate("/login") // Redirect after successful signup
+      console.log("Response data:", response.data)
+      navigate("/login")
     } catch (err) {
       console.error("Signup failed:", err.response?.data || err.message)
       setError(err.response?.data || "An error occurred during signup.")
@@ -34,65 +34,70 @@ const Signup = () => {
   }
 
   return (
-    <div className="signup-container">
-      <h2>Signup</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>First Name:</label>
-          <input
-            type="text"
-            value={fName}
-            onChange={(e) => setFName(e.target.value)}
-            required
-          />
+    <div className="background">
+      <div className="signup-container">
+        <h2>Signup</h2>
+        <img src="fevicon.png" alt="Logo" />
+        <form onSubmit={handleSubmit}>
+          <div>
+            <input
+              type="text"
+              value={fName}
+              onChange={(e) => setFName(e.target.value)}
+              placeholder="First Name"
+              required
+            />
+          </div>
+          <div>
+            <input
+              type="text"
+              value={lName}
+              onChange={(e) => setLName(e.target.value)}
+              placeholder="Last Name"
+              required
+            />
+          </div>
+          <div>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Email"
+              required
+            />
+          </div>
+          <div>
+            <div className="password-container">
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Password"
+                required
+              />
+            </div>
+          </div>
+          <div>
+            <label>Account Type</label>
+            <select
+              value={accountType}
+              onChange={(e) => setAccountType(e.target.value)}
+            >
+              <option value="User">User</option>
+              <option value="Problem Setter">Problem Setter</option>
+              <option value="Admin">Admin</option>
+            </select>
+          </div>
+          <button type="submit">Signup</button>
+          {error && <p style={{ color: "red" }}>{error}</p>}
+        </form>
+        <div className="login-button">
+          <br></br>
+          Already registered?{" "}
+          <Link to="/login">
+            <button>Login</button>
+          </Link>
         </div>
-        <div>
-          <label>Last Name:</label>
-          <input
-            type="text"
-            value={lName}
-            onChange={(e) => setLName(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Account Type:</label>
-          <select
-            value={accountType}
-            onChange={(e) => setAccountType(e.target.value)}
-          >
-            <option value="User">User</option>
-            <option value="Problem Setter">Problem Setter</option>
-            <option value="Admin">Admin</option>
-          </select>
-        </div>
-        <button type="submit">Signup</button>
-        {error && <p style={{ color: "red" }}>{error}</p>}
-      </form>
-      <div className="login-button">
-        <br></br>
-        Already registered?{" "}
-        <Link to="/login">
-          <button>login</button>
-        </Link>
       </div>
     </div>
   )

@@ -1,4 +1,3 @@
-// src/components/Navbar.js
 import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import Cookies from "js-cookie"
@@ -9,20 +8,15 @@ import "./Navbar.css"
 const Navbar = () => {
   const [userName, setUserName] = useState("")
   const [userId, setUserId] = useState("")
+  const [dropdownOpen, setDropdownOpen] = useState(false)
 
   useEffect(() => {
     const fetchUserName = async (email) => {
       try {
-        console.log(email)
         const response = await axios.post(
           "http://localhost:8000/api/getUserName",
-          {
-            email,
-          }
+          { email }
         )
-        console.log(response)
-        console.log(response.data)
-        console.log(response.userName)
         if (response.data.success) {
           setUserName(response.data.userName)
         } else {
@@ -38,7 +32,6 @@ const Navbar = () => {
       try {
         const decodedToken = jwtDecode(token)
         fetchUserName(decodedToken.email)
-        // Retrieve user ID from the token
         setUserId(decodedToken.id)
       } catch (error) {
         console.error("Error decoding token:", error)
@@ -48,30 +41,48 @@ const Navbar = () => {
 
   const handleSignOut = () => {
     Cookies.remove("token")
-    setUserName("") // Clear the username in state
-    window.location.reload() // Refresh the page or redirect to login
+    setUserName("")
+    window.location.reload()
+  }
+
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen)
   }
 
   return (
     <nav className="navbar">
-      <ul>
-        <li>
-          <Link to="/allProblems">All Problems</Link>
-        </li>
-        <li>
-          <Link to={`/profile/${userId}`}>My Profile</Link>
-        </li>
-        <li className="navbar-right">
-          {userName ? (
-            <>
-              <span>{userName}</span>
-              <button onClick={handleSignOut}>Sign Out</button>
-            </>
-          ) : (
-            <Link to="/login">Login</Link>
-          )}
-        </li>
-      </ul>
+      <div className="navbar-logo">
+        <Link to="/">
+          <img src="logo2.png" alt="Logo" />
+        </Link>
+      </div>
+      <div className="navbar-right">
+        {userName ? (
+          <div className="navbar-user">
+            <span onClick={toggleDropdown} className="navbar-user-icon">
+              <img src="icons8-user-52.png" alt="User" className="user-icon" />
+            </span>
+            {dropdownOpen && (
+              <div className="navbar-dropdown">
+                <Link to={`/profile/${userId}`}>{userName}</Link>
+                <Link to="/allProblems">All Problems</Link>
+                <button onClick={handleSignOut}>Sign Out</button>
+              </div>
+            )}
+          </div>
+        ) : (
+          <div className="navbar-user">
+            <span onClick={toggleDropdown} className="navbar-user-icon">
+              <img src="icons8-user-52.png" alt="User" />
+            </span>
+            {dropdownOpen && (
+              <div className="navbar-dropdown">
+                <Link to="/login">Login</Link>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
     </nav>
   )
 }

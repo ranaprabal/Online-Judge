@@ -55,7 +55,7 @@ const executePy = (filePath, input) => {
   //return promise based on the output
   return new Promise((resolve, reject) => {
     exec(
-      input ? `echo ${input} | python ${filePath}` : `python ${filePath}`,
+      input ? `echo ${input} | python3 ${filePath}` : `python3 ${filePath}`,
       (error, stdout, stderr) => {
         if (error) {
           reject({ error: error.toString(), stderr: stderr.toString() })

@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react"
 import axios from "axios"
 import Cookies from "js-cookie"
-import { jwtDecode } from "jwt-decode" // Correct import of jwtDecode
-import { Link, useNavigate } from "react-router-dom" // Import Link and useNavigate from React Router
+import { jwtDecode } from "jwt-decode"
+import { Link, useNavigate } from "react-router-dom"
 import "./ProblemsTable.css"
 
 const ProblemsTable = () => {
   const [problems, setProblems] = useState([])
   const [error, setError] = useState(null)
   const [userRole, setUserRole] = useState("")
-  const navigate = useNavigate() // Use useNavigate for programmatic navigation
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchProblems = async () => {
@@ -25,7 +25,6 @@ const ProblemsTable = () => {
     }
     fetchProblems()
 
-    // Retrieve user ID from the token
     const token = Cookies.get("token")
     if (token) {
       const decodedToken = jwtDecode(token)
@@ -58,10 +57,11 @@ const ProblemsTable = () => {
           {problems.map((problem) => (
             <tr key={problem._id}>
               <td>
-                {/* Make the title clickable and redirect to problem/:id */}
                 <Link to={`/problem/${problem._id}`}>{problem.title}</Link>
               </td>
-              <td>{problem.difficulty}</td>
+              <td className={problem.difficulty.toLowerCase()}>
+                {problem.difficulty}
+              </td>
               <td>{problem.tags.join(", ")}</td>
             </tr>
           ))}

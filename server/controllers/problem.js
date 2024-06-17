@@ -1,4 +1,3 @@
-// backend/routes/problems.js
 const express = require("express")
 const Problem = require("../Models2/problemSchema")
 

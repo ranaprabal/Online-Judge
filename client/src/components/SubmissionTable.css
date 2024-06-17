@@ -1,37 +1,65 @@
-/* Table styles */
-table {
+.submissions-container {
+  background-color: #1e1e1e;
+  color: #d4d4d4;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+h2 {
+  color: #d4d4d4;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.submissions-table {
   width: 100%;
   border-collapse: collapse;
 }
 
-th,
-td {
-  padding: 8px;
+.submissions-table th,
+.submissions-table td {
+  border: 1px solid #3c3c3c;
+  padding: 12px;
   text-align: left;
-  border-bottom: 1px solid #ddd;
 }
 
-th {
-  background-color: #f2f2f2;
+.submissions-table th {
+  background-color: #333333;
+  color: #d4d4d4;
 }
 
-/* Button style for code popup */
+.submissions-table td {
+  background-color: #252526;
+  color: #d4d4d4;
+}
+
+.submissions-table tr:hover {
+  background-color: #2a2d2e;
+}
+
+.accepted-row td {
+  color: #8fd19e;
+}
+
+.rejected-row td {
+  color: #ed969e;
+}
+
 button {
-  background-color: #007bff; /* Button background color */
-  color: white; /* Button text color */
+  background-color: #007acc;
+  color: #ffffff;
   border: none;
   padding: 5px 10px;
   cursor: pointer;
-  border-radius: 5px;
 }
 
 button:hover {
-  background-color: #0056b3; /* Button background color on hover */
+  background-color: #005f99;
 }
 
-/* Popup modal styles */
-.modal {
-  display: none; /* Hide modal by default */
+.modal-show {
   position: fixed;
   z-index: 1;
   left: 0;
@@ -39,19 +67,25 @@ button:hover {
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: rgba(0, 0, 0, 0.4); /* Transparent black background */
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
 .modal-content {
-  background-color: #fefefe;
-  margin: 10% auto;
+  background-color: #1e1e1e;
+  margin: 15% auto;
   padding: 20px;
   border: 1px solid #888;
-  width: 80%;
+  width: 50%;
+  color: #d4d4d4;
+  text-align: left;
+}
+
+.modal-content pre {
+  text-align: left;
 }
 
 .modal-close {
-  color: #aaa;
+  color: #aaaaaa;
   float: right;
   font-size: 28px;
   font-weight: bold;
@@ -59,21 +93,7 @@ button:hover {
 
 .modal-close:hover,
 .modal-close:focus {
-  color: black;
+  color: #000;
   text-decoration: none;
   cursor: pointer;
-}
-
-/* Accepted submission style */
-.accepted-row {
-  background-color: #d4edda; /* Light green background */
-}
-
-/* Rejected submission style */
-.rejected-row {
-  background-color: #f8d7da; /* Light red background */
-}
-
-.modal-show {
-  display: block; /* Show modal when .show class is added */
 }
