@@ -41,10 +41,6 @@
       "last 1 safari version"
     ]
   },
-  "proxy": {
-    "/api": {
-      "target": "http://13.233.90.59:8000",
-      "secure": false
-    }
-  }
+  "proxy": "http://13.233.90.59:8000",
+  "secure": false
 }
