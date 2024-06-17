@@ -16,7 +16,12 @@ const PORT = process.env.PORT || 8000
 //to read data from json
 app.use(express.urlencoded())
 app.use(express.json())
-app.use(cors())
+app.use(
+  cors({
+    origin: "",
+    credentials: true,
+  })
+)
 
 //connect to database
 const dbConnect = require("./config/database")
