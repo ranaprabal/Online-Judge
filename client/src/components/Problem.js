@@ -4,6 +4,7 @@ import "./Problem.css"
 import Cookies from "js-cookie"
 import { jwtDecode } from "jwt-decode"
 import { useNavigate } from "react-router-dom"
+const backend_url = "http://13.202.53.250:8000/"
 
 const Problem = ({ problemId }) => {
   const [problem, setProblem] = useState(null)
@@ -23,7 +24,7 @@ const Problem = ({ problemId }) => {
     const fetchProblemDetails = async () => {
       try {
         const response = await axios.get(
-          `http://13.233.90.59:8000/api/problem/${problemId}`
+          `${backend_url}api/problem/${problemId}`
         )
         console.log(response.data.problem)
 
@@ -51,14 +52,11 @@ const Problem = ({ problemId }) => {
 
   const handleRun = async () => {
     try {
-      const response = await axios.post(
-        "http://13.233.90.59:8000/api/runCode",
-        {
-          code,
-          language,
-          input: inputValue,
-        }
-      )
+      const response = await axios.post(`${backend_url}api/runCode`, {
+        code,
+        language,
+        input: inputValue,
+      })
 
       const outputData = response.data.output
       if (typeof outputData === "object") {
@@ -106,7 +104,7 @@ const Problem = ({ problemId }) => {
     try {
       console.log("this is userId: ")
       console.log(userId)
-      const response = await axios.post("http://13.233.90.59:8000/api/submit", {
+      const response = await axios.post(`${backend_url}api/submit`, {
         problemId,
         userId,
         code,

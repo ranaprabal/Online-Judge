@@ -4,6 +4,7 @@ import Cookies from "js-cookie"
 import { jwtDecode } from "jwt-decode" // Ensure correct import
 import axios from "axios"
 import "./Navbar.css"
+const backend_url = "http://13.202.53.250:8000/"
 
 const Navbar = () => {
   const [userName, setUserName] = useState("")
@@ -13,10 +14,9 @@ const Navbar = () => {
   useEffect(() => {
     const fetchUserName = async (email) => {
       try {
-        const response = await axios.post(
-          "http://13.233.90.59:8000/api/getUserName",
-          { email }
-        )
+        const response = await axios.post(`${backend_url}api/getUserName`, {
+          email,
+        })
         if (response.data.success) {
           setUserName(response.data.userName)
         } else {

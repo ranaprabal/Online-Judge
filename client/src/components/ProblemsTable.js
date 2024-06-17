@@ -4,6 +4,7 @@ import Cookies from "js-cookie"
 import { jwtDecode } from "jwt-decode"
 import { Link, useNavigate } from "react-router-dom"
 import "./ProblemsTable.css"
+const backend_url = "http://13.202.53.250:8000/"
 
 const ProblemsTable = () => {
   const [problems, setProblems] = useState([])
@@ -14,9 +15,7 @@ const ProblemsTable = () => {
   useEffect(() => {
     const fetchProblems = async () => {
       try {
-        const response = await axios.get(
-          "http://13.233.90.59:8000/api/allProblems"
-        )
+        const response = await axios.get(`${backend_url}api/allProblems`)
         setProblems(response.data)
       } catch (err) {
         console.error("Failed to fetch problems:", err)

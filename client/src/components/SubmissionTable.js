@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom"
 import { jwtDecode } from "jwt-decode"
 import Cookies from "js-cookie"
 import "./SubmissionTable.css"
+const backend_url = "http://13.202.53.250:8000/"
 
 const SubmissionsTable = () => {
   const [problem, setProblem] = useState(null)
@@ -19,7 +20,7 @@ const SubmissionsTable = () => {
     const fetchProblemDetails = async () => {
       try {
         const response = await axios.get(
-          `http://13.233.90.59:8000/api/problem/${problemId}`
+          `${backend_url}api/problem/${problemId}`
         )
         console.log(response.data.problem.title)
 
@@ -44,7 +45,7 @@ const SubmissionsTable = () => {
     const fetchSubmissions = async () => {
       try {
         const response = await axios.get(
-          "http://13.233.90.59:8000/api/showProblemSubmissions",
+          `${backend_url}api/showProblemSubmissions`,
           { params: { userId, problemId } }
         )
         setSubmissions(response.data.data)

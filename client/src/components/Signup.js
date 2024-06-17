@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import axios from "axios"
 import { Link, useNavigate } from "react-router-dom"
 import "./signup.css"
+const backend_url = "http://13.202.53.250:8000/"
 
 const Signup = () => {
   const [fName, setFName] = useState("")
@@ -18,7 +19,7 @@ const Signup = () => {
     console.log("Form data:", { fName, lName, email, password, accountType })
 
     try {
-      const response = await axios.post("http://13.233.90.59:8000/api/signup", {
+      const response = await axios.post(`${backend_url}api/signup`, {
         fName,
         lName,
         email,

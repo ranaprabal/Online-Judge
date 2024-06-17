@@ -3,6 +3,7 @@ import axios from "axios"
 import Cookies from "js-cookie"
 import { jwtDecode } from "jwt-decode"
 import "./UserProfile.css"
+const backend_url = "http://13.202.53.250:8000/"
 
 const UserProfile = () => {
   const [user, setUser] = useState(null)
@@ -28,9 +29,7 @@ const UserProfile = () => {
 
   const fetchUserProfile = async (userId) => {
     try {
-      const response = await axios.get(
-        `http://13.233.90.59:8000/api/getUser/${userId}`
-      )
+      const response = await axios.get(`${backend_url}api/getUser/${userId}`)
       const userData = response.data.data
       setUser(userData)
       setFormData({
@@ -60,10 +59,7 @@ const UserProfile = () => {
       if (token) {
         const decodedToken = jwtDecode(token)
         const userId = decodedToken.id
-        await axios.put(
-          `http://13.233.90.59:8000/api/updateDetails/${userId}`,
-          formData
-        )
+        await axios.put(`${backend_url}api/updateDetails/${userId}`, formData)
         fetchUserProfile(decodedToken.id)
         setEditMode(false)
       }

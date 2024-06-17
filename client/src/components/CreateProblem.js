@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom"
 import { jwtDecode } from "jwt-decode"
 import Cookies from "js-cookie"
 import "./CreateProblem.css"
+const backend_url = "http://13.202.53.250:8000/"
 
 const CreateProblem = () => {
   const [title, setTitle] = useState("")
@@ -49,7 +50,7 @@ const CreateProblem = () => {
     e.preventDefault()
     setError(null) // Clear previous errors
     try {
-      const response = await axios.post("http://13.233.90.59:8000/api/create", {
+      const response = await axios.post(`${backend_url}api/create`, {
         title,
         img,
         description,

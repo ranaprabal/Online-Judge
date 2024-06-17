@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom"
 import axios from "axios"
 import Cookies from "js-cookie"
 import "./Login.css"
+const backend_url = "http://13.202.53.250:8000/"
 
 const Login = () => {
   const [email, setEmail] = useState("")
@@ -13,7 +14,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      const response = await axios.post("http://13.233.90.59:8000/api/login", {
+      const response = await axios.post(`${backend_url}api/login`, {
         email,
         password,
       })
