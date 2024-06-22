@@ -1,5 +1,6 @@
-const { generateFile } = require("./generateFile")
-const { executeCpp, executePy, executeJava } = require("./executeCode")
+const axios = require("axios")
+
+const WORKER_SERVER_URL = process.env.WORKER_SERVER_URL
 
 exports.runcode = async (req, res) => {
   try {
@@ -13,32 +14,94 @@ exports.runcode = async (req, res) => {
       })
     }
     try {
-      //we need to generate the file and we need to send the response
-      const filePath = await generateFile(language, code)
       let output
 
       if (language == "cpp") {
-        output = await executeCpp(filePath, input)
+        const response = await axios.post(`${WORKER_SERVER_URL}/compileCpp`, {
+          code,
+        })
+
+        if (response.data.success === false) {
+          return res.status(400).json({
+            success: false,
+            message: "Error in compilation",
+            error: response.data.error,
+            stderr: response.data.stderr,
+          })
+        }
+
+        const outputFilePath = response.data.outputPath
+        const response2 = await axios.post(`${WORKER_SERVER_URL}/executeCpp`, {
+          input,
+          outputFilePath,
+        })
+        output = response2.data.output
       } else if (language == "py") {
-        output = await executePy(filePath, input)
+        const response = await axios.post(`${WORKER_SERVER_URL}/compilePy`, {
+          code,
+        })
+
+        if (response.data.success === false) {
+          return res.status(400).json({
+            success: false,
+            message: "Error in compilation",
+            error: response.data.error,
+            stderr: response.data.stderr,
+          })
+        }
+
+        const outputFilePath = response.data.outputPath
+        const response2 = await axios.post(`${WORKER_SERVER_URL}/executePy`, {
+          input,
+          outputFilePath,
+        })
+        output = response2.data.output
       } else if (language == "java") {
-        output = await executeJava(filePath, input)
+        const response = await axios.post(`${WORKER_SERVER_URL}/compileJava`, {
+          code,
+        })
+
+        if (response.data.success === false) {
+          return res.status(400).json({
+            success: false,
+            message: "Error in compilation",
+            error: response.data.error,
+            stderr: response.data.stderr,
+          })
+        }
+
+        const outputFilePath = response.data.outputPath
+        const response2 = await axios.post(`${WORKER_SERVER_URL}/executeJava`, {
+          input,
+          outputFilePath,
+        })
+
+        output = response2.data.output
       } else {
-        console.log("NO other languageuage supported")
+        console.log("No other language supported")
       }
 
-      return res.json({ filePath, output })
+      return res.status(200).json({ success: true, stdout: output })
     } catch (error) {
+      if (
+        error.response.data.message == "Execution stopped due to time limit"
+      ) {
+        return res.status(400).json({
+          message: error.response.data.message,
+          stderr: "error: Time Limit Exceeded",
+          success: false,
+        })
+      }
       res.status(500).json({
-        error: error.toString(), // Convert error object to string
-        stderr: error.stderr ? error.stderr.toString() : "", // Convert stderr to string
+        message: error.response.data.message,
+        stderr:
+          (error.response.data.stderr
+            ? error.response.data.stderr.toString()
+            : " ") || error.response.data.message,
         success: false,
-        message: "Error generating file or executing file",
       })
     }
   } catch (error) {
-    console.error(error)
-    console.log("could not run the code")
     res.status(500).json({
       success: false,
       error: error.toString(),

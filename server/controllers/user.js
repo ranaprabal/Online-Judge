@@ -1,5 +1,3 @@
-const bcrypt = require("bcryptjs")
-const jwt = require("jsonwebtoken")
 const userSchema = require("../Models2/userSchema")
 require("dotenv").config()
 
@@ -109,5 +107,16 @@ exports.updateDetails = async (req, res) => {
       success: false,
       message: "user with id not found, please try again later",
     })
+  }
+}
+
+exports.getAllUsers = async (req, res) => {
+  try {
+    const users = await userSchema.find({ isVerified: true })
+    res.status(200).json(users)
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error fetching users", error: error.message })
   }
 }

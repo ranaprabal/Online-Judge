@@ -1,12 +1,11 @@
 const submissionSchema = require("../Models2/submissionSchema")
 const problemSchema = require("../Models2/problemSchema")
-const { generateFile } = require("./generateFile")
-const { executeCpp, executePy, executeJava } = require("./executeCode")
+const axios = require("axios")
+
+const WORKER_SERVER_URL = process.env.WORKER_SERVER_URL
 
 exports.createSubmission = async (req, res) => {
   const { problemId, userId, code, language = "cpp" } = req.body
-
-  console.log("here it is running")
 
   try {
     const problem = await problemSchema.findById(problemId)
@@ -29,41 +28,92 @@ exports.createSubmission = async (req, res) => {
     submission.status = "Running"
     await submission.save()
 
+    let response
+
+    if (language == "cpp") {
+      response = await axios.post(`${WORKER_SERVER_URL}/compileCpp`, {
+        code,
+      })
+
+      if (response.data.success === false) {
+        return res.status(400).json({
+          success: false,
+          message: "Error in compilation",
+          error: response.data.error,
+          stderr: response.data.stderr,
+        })
+      }
+    } else if (language == "py") {
+      response = await axios.post(`${WORKER_SERVER_URL}/compilePy`, {
+        code,
+      })
+
+      if (response.data.success === false) {
+        return res.status(400).json({
+          success: false,
+          message: "Error in compilation",
+          error: response.data.error,
+          stderr: response.data.stderr,
+        })
+      }
+    } else if (language == "java") {
+      response = await axios.post(`${WORKER_SERVER_URL}/compileJava`, {
+        code,
+      })
+
+      if (response.data.success === false) {
+        return res.status(400).json({
+          success: false,
+          message: "Error in compilation",
+          error: response.data.error,
+          stderr: response.data.stderr,
+        })
+      }
+    }
+
+    const outputFilePath = response.data.outputPath
+
     let allPassed = true
     let totalTime = 0
     let totalMemory = 0
     let totalTestcasePassed = 1
     try {
-      const filePath = await generateFile(language, code)
-
       for (const testCase of problem.testcases) {
-        let runResult
+        let response2
         if (language == "cpp") {
-          runResult = await executeCpp(filePath, testCase.input)
+          response2 = await axios.post(`${WORKER_SERVER_URL}/executeCpp`, {
+            input: testCase.input,
+            outputFilePath,
+          })
         } else if (language == "py") {
-          runResult = await executePy(filePath, testCase.input)
+          response2 = await axios.post(`${WORKER_SERVER_URL}/executePy`, {
+            input: testCase.input,
+            outputFilePath,
+          })
         } else if (language == "java") {
-          runResult = await executeJava(filePath, testCase.input)
+          response2 = await axios.post(`${WORKER_SERVER_URL}/executeJava`, {
+            input: testCase.input,
+            outputFilePath,
+          })
         }
 
-        if (runResult.trim() != testCase.output.trim()) {
-          console.log(runResult, testCase.output)
+        if (response2.data.output.trim() != testCase.output.trim()) {
           allPassed = false
           submission.status = "Completed"
           submission.verdict = "Wrong Answer"
-          submission.result = `Test case failed: ${testCase.input} -> Expected: ${testCase.output}, Got: ${runResult.output}`
+          submission.result = `Test case failed: ${testCase.input} -> Expected: ${testCase.output}, Got: ${response2.output}`
           submission.passedTestcase = totalTestcasePassed
           break
         }
         totalTestcasePassed += 1
-        //   totalTime += runResult.time
-        //   totalMemory += runResult.memory
+        //   totalTime += response2.time
+        //   totalMemory += response2.memory
       }
     } catch (error) {
       return res.status(500).json({
-        error: error.message,
+        error: error.response.data,
         success: false,
-        message: "compare the outputs",
+        message: error.response.data.message,
       })
     }
 
@@ -106,8 +156,6 @@ exports.showProblemSubmissions = async (req, res) => {
       message: "Submissions fetched successful",
     })
   } catch (error) {
-    // Handle errors
-    console.error(error)
     return res.status(500).json({
       success: false,
       message: "error in Submissions fetching",

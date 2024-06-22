@@ -17,7 +17,7 @@ const submissionSchema = new mongoose.Schema({
   },
   submittedAt: {
     type: Date,
-    default: Date.now(),
+    default: () => new Date(),
   },
   language: {
     type: String,

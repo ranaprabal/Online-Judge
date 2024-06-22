@@ -1,5 +1,7 @@
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
+const crypto = require("crypto")
+const nodemailer = require("nodemailer")
 const userSchema = require("../Models2/userSchema")
 require("dotenv").config()
 
@@ -42,6 +44,8 @@ exports.signup = async (req, res) => {
       })
     }
 
+    const verificationToken = crypto.randomBytes(16).toString("hex")
+
     //create user in DB
     const user = await userSchema.create({
       fName,
@@ -49,11 +53,39 @@ exports.signup = async (req, res) => {
       email,
       password: hashedPassword,
       accountType,
+      verificationToken,
     })
 
-    return res.status(200).json({
-      success: true,
-      message: "User created successfully",
+    const transporter = nodemailer.createTransport({
+      service: "Gmail",
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.EMAIL_PASSWORD,
+      },
+    })
+
+    const mailOptions = {
+      from: process.env.EMAIL,
+      to: user.email,
+      subject: "Account Verification",
+      text: `Please verify your account by clicking the link: \nhttp://${req.headers.host}/api/verify-email?token=${verificationToken}`,
+    }
+    console.log("mail sent")
+
+    transporter.sendMail(mailOptions, (err) => {
+      if (err) {
+        console.error(err)
+        return res
+          .status(500)
+          .json({ message: "Technical issue! Please try again later." })
+      }
+      return res.status(200).json({
+        success: true,
+        message:
+          "User created successfully. A verification email has been sent to " +
+          user.email +
+          ".",
+      })
     })
   } catch (error) {
     console.log(error)
@@ -84,6 +116,13 @@ exports.login = async (req, res) => {
       return res.status(401).json({
         success: false,
         message: `No user exist with email: ${email}`,
+      })
+    }
+
+    if (!registeredUser.isVerified) {
+      return res.status(403).json({
+        success: false,
+        message: "Please verify your email to log in",
       })
     }
 
@@ -129,6 +168,34 @@ exports.login = async (req, res) => {
     return res.status(500).json({
       success: false,
       message: "user login failed, please try again later",
+    })
+  }
+}
+
+exports.verifyEmail = async (req, res) => {
+  try {
+    const { token } = req.query
+    console.log(token)
+
+    const user = await userSchema.findOne({ verificationToken: token })
+
+    if (!user) {
+      return res.status(400).json({ success: false, message: "Invalid token" })
+    }
+
+    user.isVerified = true
+    user.verificationToken = undefined
+    await user.save()
+
+    res.status(200).json({
+      success: true,
+      message: "Your account has been successfully verified",
+    })
+  } catch (error) {
+    console.log(error)
+    return res.status(500).json({
+      success: false,
+      message: "Email verification failed, please try again later",
     })
   }
 }

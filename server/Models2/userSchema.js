@@ -44,8 +44,7 @@ const userSchema = new mongoose.Schema({
   ],
   image: {
     type: String,
-    default:
-      "https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg",
+    default: "user.jpg",
   },
   DOB: {
     type: Date,
@@ -57,6 +56,13 @@ const userSchema = new mongoose.Schema({
     type: String,
   },
   phoneNumber: {
+    type: String,
+  },
+  isVerified: {
+    type: Boolean,
+    default: false,
+  },
+  verificationToken: {
     type: String,
   },
   country: {
