@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react"
 import axios from "axios"
 import Cookies from "js-cookie"
-import { jwtDecode } from "jwt-decode" // Import jwtDecode correctly
+import { jwtDecode } from "jwt-decode"
 import { Link, useNavigate } from "react-router-dom"
 import "./ProblemsTable.css"
-
+// const backend_url = "http://13.202.53.250:8000/"
 const backend_url = "http://localhost:8080/"
 
-const ProblemsTable = () => {
+const ProblemsTableWithEdit = () => {
   const [problems, setProblems] = useState([])
   const [error, setError] = useState(null)
   const [userRole, setUserRole] = useState("")
@@ -36,6 +36,10 @@ const ProblemsTable = () => {
     navigate("/create-problem")
   }
 
+  const handleEditProblem = (id) => {
+    navigate(`/edit-problem/${id}`)
+  }
+
   return (
     <div className="problems-container">
       {error && <p style={{ color: "red" }}>{error}</p>}
@@ -51,6 +55,7 @@ const ProblemsTable = () => {
             <th>Title</th>
             <th>Difficulty</th>
             <th>Tags</th>
+            <th>Edit</th>
           </tr>
         </thead>
         <tbody>
@@ -63,6 +68,14 @@ const ProblemsTable = () => {
                 {problem.difficulty}
               </td>
               <td>{problem.tags.join(", ")}</td>
+              <td>
+                <button
+                  className="edit-button"
+                  onClick={() => handleEditProblem(problem._id)}
+                >
+                  Edit
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
@@ -71,4 +84,4 @@ const ProblemsTable = () => {
   )
 }
 
-export default ProblemsTable
+export default ProblemsTableWithEdit

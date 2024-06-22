@@ -1,16 +1,14 @@
 import React, { useState, useEffect } from "react"
-import { Link } from "react-router-dom"
+import { useParams, Link, useNavigate } from "react-router-dom"
 import axios from "axios"
-import { useNavigate } from "react-router-dom"
-import { jwtDecode } from "jwt-decode"
 import Cookies from "js-cookie"
+import { jwtDecode } from "jwt-decode" // Corrected the import
 import "./CreateProblem.css"
-import Fevicon from "../images/fevicon.png"
 
-// const backend_url = "http://13.202.53.250:8000/"
 const backend_url = "http://localhost:8080/"
 
-const CreateProblem = () => {
+const EditProblem = () => {
+  const { id } = useParams()
   const [title, setTitle] = useState("")
   const [img, setImg] = useState("")
   const [description, setDescription] = useState("")
@@ -31,7 +29,37 @@ const CreateProblem = () => {
       const decodedToken = jwtDecode(token)
       setUserId(decodedToken.id)
     }
-  }, [])
+
+    const fetchProblem = async () => {
+      try {
+        const response = await axios.get(`${backend_url}api/problem/${id}`)
+        const problem = response.data.problem
+        setTitle(problem.title || "")
+        setImg(problem.img || "")
+        setDescription(problem.description || "")
+        setInputFormat(problem.inputFormat || "")
+        setOutputFormat(problem.outputFormat || "")
+        setConstraints(problem.constraints || "")
+        setExamples(
+          problem.examples.length > 0
+            ? problem.examples
+            : [{ input: "", output: "" }]
+        )
+        setDifficulty(problem.difficulty || "Easy")
+        setTags(problem.tags.length > 0 ? problem.tags : [])
+        setTestcases(
+          problem.testcases.length > 0
+            ? problem.testcases
+            : [{ input: "", output: "" }]
+        )
+      } catch (err) {
+        console.error("Failed to fetch problem:", err)
+        setError("Failed to fetch problem")
+      }
+    }
+
+    fetchProblem()
+  }, [id])
 
   const handleExampleChange = (index, field, value) => {
     const updatedExamples = [...examples]
@@ -51,30 +79,33 @@ const CreateProblem = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    setError(null) // Clear previous errors
+    setError(null)
     try {
-      const response = await axios.post(`${backend_url}api/create`, {
-        title,
-        img,
-        description,
-        inputFormat,
-        outputFormat,
-        constraints,
-        examples,
-        difficulty,
-        tags,
-        testcases,
-        setterId: userId,
-      })
-      console.log(response)
+      console.log(`Submitting update to: ${backend_url}api/updateProblem/${id}`)
+      const response = await axios.put(
+        `${backend_url}api/updateProblem/${id}`,
+        {
+          title,
+          img,
+          description,
+          inputFormat,
+          outputFormat,
+          constraints,
+          examples,
+          difficulty,
+          tags,
+          testcases,
+        }
+      )
+      console.log(response.data)
       navigate("/allProblems")
     } catch (err) {
-      console.error(
-        "Problem creation failed:",
-        err.response?.data || err.message
-      )
+      console.log(err)
+      console.error("Problem update failed:", err.response?.data || err.message)
       setError(
-        err.response?.data || "An error occurred during problem creation."
+        JSON.stringify(
+          err.response?.data || "An error occurred during problem update."
+        )
       )
     }
   }
@@ -82,10 +113,10 @@ const CreateProblem = () => {
   return (
     <div className="background">
       <div className="create-problem-container">
-        <Link to="/allProblems">
-          <img src={Fevicon} alt="Logo" />
+        <Link to="/">
+          <img src="fevicon.png" alt="Logo" />
         </Link>
-        <h2>Create Problem</h2>
+        <h2>Edit Problem</h2>
         <form onSubmit={handleSubmit}>
           <div>
             <input
@@ -113,7 +144,6 @@ const CreateProblem = () => {
             />
           </div>
           <div>
-            <label></label>
             <textarea
               value={inputFormat}
               onChange={(e) => setInputFormat(e.target.value)}
@@ -214,7 +244,9 @@ const CreateProblem = () => {
               Add Test Case
             </button>
           </div>
-          <button type="submit">Create Problem</button>
+          <button type="submit" onClick={handleSubmit}>
+            Update Problem
+          </button>
           {error && <p style={{ color: "red" }}>{error}</p>}
         </form>
       </div>
@@ -222,4 +254,4 @@ const CreateProblem = () => {
   )
 }
 
-export default CreateProblem
+export default EditProblem

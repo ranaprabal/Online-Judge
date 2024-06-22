@@ -15,6 +15,11 @@ import Problem from "./components/Problem"
 import Navbar from "./components/Navbar"
 import SubmissionsTable from "./components/SubmissionTable"
 import UserProfile from "./components/UserProfile"
+import ProblemsTableWithEdit from "./components/ProblemTableWithEdit"
+import CreateCompetitions from "./components/CreateCompetitions"
+import EditProblem from "./components/EditProblem"
+import CompetitionsTable from "./components/Competitions"
+import Competition from "./components/LockOut1vs1"
 import "./App.css"
 
 function App() {
@@ -29,11 +34,16 @@ function App() {
           <Route path="/allProblems" element={<ProblemsTable />} />
           <Route path="/create-problem" element={<CreateProblem />} />
           <Route path="/problem/:id" element={<ProblemWrapper />} />
+          <Route path="/edit-problem/:id" element={<EditProblem />} />
+          <Route path="/competition/:id" element={<Competition />} />
+          <Route path="/create-competitions" element={<CreateCompetitions />} />
           <Route
             path="/getProblemSubmissions/:problemId"
             element={<SubmissionsTable />}
           />
           <Route path="/profile/:userId" element={<UserWrapper />} />
+          <Route path="/edit-problems" element={<ProblemsTableWithEdit />} />
+          <Route path="/allCompetitions" element={<CompetitionsTable />} />
         </Routes>
       </div>
     </Router>
@@ -45,7 +55,12 @@ const ConditionalNavbar = () => {
   const showNavbar =
     location.pathname === "/allProblems" ||
     location.pathname.startsWith("/problem") ||
-    location.pathname.startsWith("/getProblemSubmissions")
+    location.pathname.startsWith("/getProblemSubmissions") ||
+    location.pathname.startsWith("/profile") ||
+    location.pathname.startsWith("/allCompetitions") ||
+    location.pathname.startsWith("/edit-problems") ||
+    location.pathname.startsWith("/competition")
+
   return showNavbar ? <Navbar /> : null
 }
 

@@ -4,7 +4,8 @@ import "./Problem.css"
 import Cookies from "js-cookie"
 import { jwtDecode } from "jwt-decode"
 import { useNavigate } from "react-router-dom"
-const backend_url = "http://13.202.53.250:8000/"
+// const backend_url = "http://13.202.53.250:8000/"
+const backend_url = "http://localhost:8080/"
 
 const Problem = ({ problemId }) => {
   const [problem, setProblem] = useState(null)
@@ -26,7 +27,6 @@ const Problem = ({ problemId }) => {
         const response = await axios.get(
           `${backend_url}api/problem/${problemId}`
         )
-        console.log(response.data.problem)
 
         setProblem(response.data.problem)
       } catch (error) {
@@ -58,7 +58,7 @@ const Problem = ({ problemId }) => {
         input: inputValue,
       })
 
-      const outputData = response.data.output
+      const outputData = response.data.stdout
       if (typeof outputData === "object") {
         setOutput(JSON.stringify(outputData, null, 2)) // Convert the object to a string for display
       } else {
@@ -69,12 +69,8 @@ const Problem = ({ problemId }) => {
       setActiveTab("output")
     } catch (error) {
       const errorResponse = error.response?.data
-      const errorMessage = errorResponse?.error || "Error in code execution"
+      // const errorMessage = errorResponse?.error || "Error in code execution"
       const stderrMessage = errorResponse?.stderr || ""
-
-      console.log(errorMessage)
-      console.log("end")
-      console.log(stderrMessage)
 
       let multilineString = stderrMessage.toString()
 
@@ -90,11 +86,11 @@ const Problem = ({ problemId }) => {
       lines.forEach((line) => {
         const match = line.match(regex)
         if (match) {
-          errorLineMessage += "error: " + match[1] + "\n" // Add the captured error message to the new string
+          errorLineMessage += match[1] + "\n" // Add the captured error message to the new string
         }
       })
 
-      setOutput(`Stderr: \n${errorLineMessage}`)
+      setOutput(`${errorLineMessage}`)
       setVerdict("code has some error")
       setActiveTab("output")
     }
@@ -102,8 +98,6 @@ const Problem = ({ problemId }) => {
 
   const handleSubmit = async () => {
     try {
-      console.log("this is userId: ")
-      console.log(userId)
       const response = await axios.post(`${backend_url}api/submit`, {
         problemId,
         userId,
@@ -133,10 +127,18 @@ const Problem = ({ problemId }) => {
       setTestCaseResults(testCaseStatuses)
       setActiveTab("verdict")
     } catch (error) {
-      console.log(error)
-      setOutput(error.response?.data?.error || "Error in submission")
-      setVerdict("Submission Failed")
-      setActiveTab("verdict")
+      if (error.response.data.message === "Can not submit currently") {
+        setVerdict("Error might be due to incorrect code or server error")
+        setActiveTab("verdict")
+      } else if (error.response.data.error.error === "Execution timed out") {
+        setOutput(error.response?.data?.error || "Error in submission")
+        setVerdict("Time Limit Exceeded")
+        setActiveTab("verdict")
+      } else {
+        setOutput(error.response?.data?.error || "Error in submission")
+        setVerdict("Submission Failed")
+        setActiveTab("verdict")
+      }
     }
   }
 

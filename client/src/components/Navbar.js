@@ -1,15 +1,22 @@
 import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 import Cookies from "js-cookie"
-import { jwtDecode } from "jwt-decode" // Ensure correct import
+import { jwtDecode } from "jwt-decode"
 import axios from "axios"
 import "./Navbar.css"
-const backend_url = "http://13.202.53.250:8000/"
+import AppLogo from "../images/logo2.png"
+import UserLogo from "../images/icons8-user-52.png"
+
+const backend_url = "http://localhost:8080/"
 
 const Navbar = () => {
   const [userName, setUserName] = useState("")
   const [userId, setUserId] = useState("")
-  const [dropdownOpen, setDropdownOpen] = useState(false)
+  const [userRole, setUserRole] = useState("")
+  const [userDropdownOpen, setUserDropdownOpen] = useState(false)
+  const [problemsDropdownOpen, setProblemsDropdownOpen] = useState(false)
+  const [competitionsDropdownOpen, setCompetitionsDropdownOpen] =
+    useState(false)
 
   useEffect(() => {
     const fetchUserName = async (email) => {
@@ -33,6 +40,7 @@ const Navbar = () => {
         const decodedToken = jwtDecode(token)
         fetchUserName(decodedToken.email)
         setUserId(decodedToken.id)
+        setUserRole(decodedToken.accountType) // Set user role from the token
       } catch (error) {
         console.error("Error decoding token:", error)
       }
@@ -45,37 +53,75 @@ const Navbar = () => {
     window.location.reload()
   }
 
-  const toggleDropdown = () => {
-    setDropdownOpen(!dropdownOpen)
+  const toggleUserDropdown = () => {
+    setUserDropdownOpen(!userDropdownOpen)
+  }
+
+  const toggleProblemsDropdown = () => {
+    setProblemsDropdownOpen(!problemsDropdownOpen)
+  }
+
+  const toggleCompetitionsDropdown = () => {
+    setCompetitionsDropdownOpen(!competitionsDropdownOpen)
   }
 
   return (
     <nav className="navbar">
       <div className="navbar-logo">
-        <Link to="/">
-          <img src="logo2.png" alt="Logo" />
+        <Link to="/allProblems">
+          <img src={AppLogo} alt="Logo" />
         </Link>
+      </div>
+      <div className="navbar-links">
+        <div className="navbar-item">
+          <span onClick={toggleProblemsDropdown} className="navbar-link">
+            Problems
+          </span>
+          {problemsDropdownOpen && (
+            <div className="navbar-dropdown">
+              {userRole === "Admin" && (
+                <Link to="/edit-problems">Edit Problems</Link>
+              )}
+              {(userRole === "Admin" || userRole === "Problem Setter") && (
+                <Link to="/create-problem">Create Problem</Link>
+              )}
+              <Link to="/allProblems">All Problems</Link>
+            </div>
+          )}
+        </div>
+        <div className="navbar-item">
+          <span onClick={toggleCompetitionsDropdown} className="navbar-link">
+            Competitions
+          </span>
+          {competitionsDropdownOpen && (
+            <div className="navbar-dropdown">
+              {userRole === "Admin" && (
+                <Link to="/create-competitions">Create Competition</Link>
+              )}
+              <Link to="/allCompetitions">All Competitions</Link>
+            </div>
+          )}
+        </div>
       </div>
       <div className="navbar-right">
         {userName ? (
           <div className="navbar-user">
-            <span onClick={toggleDropdown} className="navbar-user-icon">
-              <img src="icons8-user-52.png" alt="User" className="user-icon" />
+            <span onClick={toggleUserDropdown} className="navbar-user-icon">
+              <img src={UserLogo} alt="User" className="user-icon" />
             </span>
-            {dropdownOpen && (
+            {userDropdownOpen && (
               <div className="navbar-dropdown">
                 <Link to={`/profile/${userId}`}>{userName}</Link>
-                <Link to="/allProblems">All Problems</Link>
                 <button onClick={handleSignOut}>Sign Out</button>
               </div>
             )}
           </div>
         ) : (
           <div className="navbar-user">
-            <span onClick={toggleDropdown} className="navbar-user-icon">
-              <img src="icons8-user-52.png" alt="User" />
+            <span onClick={toggleUserDropdown} className="navbar-user-icon">
+              <img src={UserLogo} alt="User" />
             </span>
-            {dropdownOpen && (
+            {userDropdownOpen && (
               <div className="navbar-dropdown">
                 <Link to="/login">Login</Link>
               </div>

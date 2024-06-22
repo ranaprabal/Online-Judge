@@ -4,7 +4,8 @@ import { useParams } from "react-router-dom"
 import { jwtDecode } from "jwt-decode"
 import Cookies from "js-cookie"
 import "./SubmissionTable.css"
-const backend_url = "http://13.202.53.250:8000/"
+// const backend_url = "http://13.202.53.250:8000/"
+const backend_url = "http://localhost:8080/"
 
 const SubmissionsTable = () => {
   const [problem, setProblem] = useState(null)

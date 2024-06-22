@@ -3,12 +3,15 @@ import { Link, useNavigate } from "react-router-dom"
 import axios from "axios"
 import Cookies from "js-cookie"
 import "./Login.css"
-const backend_url = "http://13.202.53.250:8000/"
+
+// const backend_url = "http://13.202.53.250:8000/"
+const backend_url = "http://localhost:8080/"
 
 const Login = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [showPassword, setShowPassword] = useState(false)
+  const [errorMessage, setErrorMessage] = useState("")
   const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
@@ -23,8 +26,8 @@ const Login = () => {
 
       navigate("/allProblems")
     } catch (error) {
-      console.log(error)
-      console.error("Login failed:", error.response?.data || error.message)
+      setErrorMessage(error.response?.data?.message || "Login failed")
+      console.error("Login failed:", error.message)
     }
   }
 
@@ -33,6 +36,7 @@ const Login = () => {
       <div className="login-container">
         <h2>Welcome</h2>
         <img src="fevicon.png" alt="Logo" />
+        {errorMessage && <div className="error-message">{errorMessage}</div>}
         <form onSubmit={handleSubmit}>
           <div>
             <input

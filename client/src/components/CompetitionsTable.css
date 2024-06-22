@@ -1,0 +1,79 @@
+.competitions-container {
+  background-color: #1e1e1e;
+  color: #d4d4d4;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+h2 {
+  color: #d4d4d4;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.create-competition-button {
+  background-color: #007acc;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.create-competition-button:hover {
+  background-color: #005f99;
+}
+
+.competitions-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.competitions-table th,
+.competitions-table td {
+  border: 1px solid #3c3c3c;
+  padding: 12px;
+  text-align: left;
+}
+
+.competitions-table th {
+  background-color: #333333;
+  color: #d4d4d4;
+}
+
+.competitions-table td {
+  background-color: #252526;
+  color: #d4d4d4;
+}
+
+.competitions-table tr:nth-child(even) {
+  background-color: #2a2d2e;
+}
+
+.competitions-table tr:hover {
+  background-color: #3a3d3e;
+}
+
+.competitions-table a {
+  color: #00bfff; /* Sky blue color for links */
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.competitions-table a:hover {
+  text-decoration: underline;
+}
+
+.competitions-table .status {
+  color: #ffa500; /* Orange color for status */
+}
+
+.competitions-table .date-time {
+  color: #7fff00; /* Chartreuse color for date and time */
+}

@@ -2,7 +2,8 @@ import React, { useState } from "react"
 import axios from "axios"
 import Cookies from "js-cookie"
 import { useNavigate } from "react-router-dom"
-const backend_url = "http://13.202.53.250:8000/"
+// const backend_url = "http://13.202.53.250:8000/"
+const backend_url = "http://localhost:8080/"
 
 const LoginButton = () => {
   const [email, setEmail] = useState("")

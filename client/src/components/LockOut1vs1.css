@@ -1,0 +1,95 @@
+.competition-container {
+  background-color: #2e2e2e;
+  color: #f0f0f0;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.competition-title {
+  color: #f0f0f0;
+  margin-bottom: 20px;
+  font-size: 2.5em;
+}
+
+.competition-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.user-box {
+  flex: 1;
+  text-align: center;
+}
+
+.user-name {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+.user-score {
+  font-size: 1.2em;
+}
+
+.vs-box {
+  flex: 0 1 150px;
+  font-size: 3em;
+  color: #e76d16;
+}
+
+.competition-over {
+  margin: 20px 0;
+}
+
+.competition-over h3 {
+  color: #9df114;
+}
+
+.competition-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.competition-table th,
+.competition-table td {
+  border: 1px solid #4a4a4a;
+  padding: 12px;
+}
+
+.competition-table th {
+  background-color: #444;
+  color: #f0f0f0;
+}
+
+.competition-table td {
+  background-color: #363636;
+  color: #f0f0f0;
+}
+
+.competition-table tr:nth-child(even) {
+  background-color: #3b3b3b;
+}
+
+.competition-table tr:hover {
+  background-color: #4a4a4a;
+}
+
+.competition-table a {
+  color: #00bfff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.competition-table a:hover {
+  text-decoration: underline;
+}
+
+.competition-table .solved a {
+  text-decoration: line-through;
+  color: #d3d3d3;
+}

@@ -2,7 +2,9 @@ import React, { useState } from "react"
 import axios from "axios"
 import { Link, useNavigate } from "react-router-dom"
 import "./signup.css"
-const backend_url = "http://13.202.53.250:8000/"
+
+// const backend_url = "http://13.202.53.250:8000/"
+const backend_url = "http://localhost:8080/"
 
 const Signup = () => {
   const [fName, setFName] = useState("")
@@ -11,6 +13,7 @@ const Signup = () => {
   const [password, setPassword] = useState("")
   const [accountType, setAccountType] = useState("User")
   const [error, setError] = useState(null)
+  const [successMessage, setSuccessMessage] = useState("")
   const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
@@ -27,10 +30,14 @@ const Signup = () => {
         accountType,
       })
       console.log("Response data:", response.data)
-      navigate("/login")
+      setSuccessMessage(
+        "A verification email has been sent to your email address. Please check your inbox."
+      )
+      setTimeout(() => navigate("/login"), 3000) // Redirect to login after 3 seconds
     } catch (err) {
-      console.error("Signup failed:", err.response?.data || err.message)
-      setError(err.response?.data || "An error occurred during signup.")
+      console.log(err)
+      console.error("Signup failed:", err.response.data)
+      setError(err.response.data.message)
     }
   }
 
@@ -39,61 +46,65 @@ const Signup = () => {
       <div className="signup-container">
         <h2>Signup</h2>
         <img src="fevicon.png" alt="Logo" />
-        <form onSubmit={handleSubmit}>
-          <div>
-            <input
-              type="text"
-              value={fName}
-              onChange={(e) => setFName(e.target.value)}
-              placeholder="First Name"
-              required
-            />
-          </div>
-          <div>
-            <input
-              type="text"
-              value={lName}
-              onChange={(e) => setLName(e.target.value)}
-              placeholder="Last Name"
-              required
-            />
-          </div>
-          <div>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Email"
-              required
-            />
-          </div>
-          <div>
-            <div className="password-container">
+        {successMessage ? (
+          <p style={{ color: "green" }}>{successMessage}</p>
+        ) : (
+          <form onSubmit={handleSubmit}>
+            <div>
               <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Password"
+                type="text"
+                value={fName}
+                onChange={(e) => setFName(e.target.value)}
+                placeholder="First Name"
                 required
               />
             </div>
-          </div>
-          <div>
-            <label>Account Type</label>
-            <select
-              value={accountType}
-              onChange={(e) => setAccountType(e.target.value)}
-            >
-              <option value="User">User</option>
-              <option value="Problem Setter">Problem Setter</option>
-              <option value="Admin">Admin</option>
-            </select>
-          </div>
-          <button type="submit">Signup</button>
-          {error && <p style={{ color: "red" }}>{error}</p>}
-        </form>
+            <div>
+              <input
+                type="text"
+                value={lName}
+                onChange={(e) => setLName(e.target.value)}
+                placeholder="Last Name"
+                required
+              />
+            </div>
+            <div>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Email"
+                required
+              />
+            </div>
+            <div>
+              <div className="password-container">
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Password"
+                  required
+                />
+              </div>
+            </div>
+            <div>
+              <label>Account Type</label>
+              <select
+                value={accountType}
+                onChange={(e) => setAccountType(e.target.value)}
+              >
+                <option value="User">User</option>
+                <option value="Problem Setter">Problem Setter</option>
+                <option value="Admin">Admin</option>
+              </select>
+            </div>
+            <button type="submit">Signup</button>
+            {error && <p style={{ color: "red" }}>{error}</p>}
+          </form>
+        )}
         <div className="login-button">
-          <br></br>
+          <br />
           Already registered?{" "}
           <Link to="/login">
             <button>Login</button>
