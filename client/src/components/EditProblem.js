@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react"
 import { useParams, Link, useNavigate } from "react-router-dom"
 import axios from "axios"
 import Cookies from "js-cookie"
-import { jwtDecode } from "jwt-decode" // Corrected the import
+import { jwtDecode } from "jwt-decode"
 import "./CreateProblem.css"
 
-const backend_url = "http://localhost:8080/"
+const backend_url = "https://backend.codejury.org/"
 
 const EditProblem = () => {
   const { id } = useParams()

@@ -4,8 +4,8 @@ import "./Problem.css"
 import Cookies from "js-cookie"
 import { jwtDecode } from "jwt-decode"
 import { useNavigate } from "react-router-dom"
-// const backend_url = "http://13.202.53.250:8000/"
-const backend_url = "http://localhost:8080/"
+
+const backend_url = "https://backend.codejury.org/"
 
 const Problem = ({ problemId }) => {
   const [problem, setProblem] = useState(null)

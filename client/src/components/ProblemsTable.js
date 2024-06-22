@@ -5,7 +5,7 @@ import { jwtDecode } from "jwt-decode" // Import jwtDecode correctly
 import { Link, useNavigate } from "react-router-dom"
 import "./ProblemsTable.css"
 
-const backend_url = "http://localhost:8080/"
+const backend_url = "https://backend.codejury.org/"
 
 const ProblemsTable = () => {
   const [problems, setProblems] = useState([])

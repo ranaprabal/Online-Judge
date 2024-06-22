@@ -3,7 +3,7 @@ import axios from "axios"
 import { Link } from "react-router-dom"
 import "./CompetitionsTable.css"
 
-const backend_url = "http://localhost:8080/"
+const backend_url = "https://backend.codejury.org/"
 
 const CompetitionsTable = () => {
   const [competitions, setCompetitions] = useState([])

@@ -3,8 +3,7 @@ import axios from "axios"
 import { Link, useNavigate } from "react-router-dom"
 import "./signup.css"
 
-// const backend_url = "http://13.202.53.250:8000/"
-const backend_url = "http://localhost:8080/"
+const backend_url = "https://backend.codejury.org/"
 
 const Signup = () => {
   const [fName, setFName] = useState("")

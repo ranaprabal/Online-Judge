@@ -7,7 +7,7 @@ import "./Navbar.css"
 import AppLogo from "../images/logo2.png"
 import UserLogo from "../images/icons8-user-52.png"
 
-const backend_url = "http://localhost:8080/"
+const backend_url = "https://backend.codejury.org/"
 
 const Navbar = () => {
   const [userName, setUserName] = useState("")

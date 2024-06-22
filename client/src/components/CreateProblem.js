@@ -7,8 +7,7 @@ import Cookies from "js-cookie"
 import "./CreateProblem.css"
 import Fevicon from "../images/fevicon.png"
 
-// const backend_url = "http://13.202.53.250:8000/"
-const backend_url = "http://localhost:8080/"
+const backend_url = "https://backend.codejury.org/"
 
 const CreateProblem = () => {
   const [title, setTitle] = useState("")

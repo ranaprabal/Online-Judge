@@ -6,7 +6,7 @@ import Cookies from "js-cookie"
 import "./CreateCompetition.css"
 import Fevicon from "../images/fevicon.png"
 
-const backend_url = "http://localhost:8080/"
+const backend_url = "https://backend.codejury.org/"
 
 const CreateCompetition = () => {
   const [user1, setUser1] = useState("")
