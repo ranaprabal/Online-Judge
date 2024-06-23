@@ -135,7 +135,7 @@ By leveraging the Online Judge System and its one-on-one competition feature, us
 
 ## Architecture
 
-<img src="https://github.com/ranaprabal/assets/blob/main/architecture.png" />
+<img src="https://github.com/ranaprabal/assets/blob/main/architecture.png" height="450" />
 
 ## Usage
 
@@ -143,33 +143,33 @@ By leveraging the Online Judge System and its one-on-one competition feature, us
 
 <p>
   
-<img src="https://github.com/ranaprabal/assets/blob/main/home.png"  width="250"/>
+<img src="https://github.com/ranaprabal/assets/blob/main/home.png"  width="450"/>
 
-<img src="https://github.com/ranaprabal/assets/blob/main/signup.png"  width="250"/>
+<img src="https://github.com/ranaprabal/assets/blob/main/signup.png"  width="450"/>
 </p>
 
 ### 2. Problems Related Pages: Problem Setters can create problems.
 <p>
   
-<img src="https://github.com/ranaprabal/assets/blob/main/allproblems.png"  width="250"/>
+<img src="https://github.com/ranaprabal/assets/blob/main/allproblems.png"  width="450"/>
 
-<img src="https://github.com/ranaprabal/assets/blob/main/createProblem.png"  width="250"/>
+<img src="https://github.com/ranaprabal/assets/blob/main/createProblem.png"  width="450"/>
 </p>
 
 ### 3. Code Submission: Users can submit their code for problems, which will be compiled and executed.
 <p>
   
-<img src="https://github.com/ranaprabal/assets/blob/main/problempage.png"  width="250"/>
+<img src="https://github.com/ranaprabal/assets/blob/main/problempage.png"  width="450"/>
 
-<img src="https://github.com/ranaprabal/assets/blob/main/verdict.png"  width="250"/>
+<img src="https://github.com/ranaprabal/assets/blob/main/verdict.png"  width="450"/>
 </p>
 
 ### 4. One vs One Competitions:.
 <p>
   
-<img src="https://github.com/ranaprabal/assets/blob/main/allcompetitions.png"  width="250"/>
+<img src="https://github.com/ranaprabal/assets/blob/main/allcompetitions.png"  width="450"/>
 
-<img src="https://github.com/ranaprabal/assets/blob/main/competitionPage.png"  width="250"/>
+<img src="https://github.com/ranaprabal/assets/blob/main/competitionPage.png"  width="450"/>
 </p>
 
 ## LICENSE
