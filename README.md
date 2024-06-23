@@ -27,8 +27,8 @@ CodeJury is a comprehensive platform built using the MERN stack (MongoDB, Expres
 
 #### Containerization && Database: Docker, MongoDB
 
-<img src="https://bunnyacademy.b-cdn.net/what-is-docker.png" height="150"/>
-<img src="https://miro.medium.com/v2/resize:fit:1400/0*rHiBrlitOsO_Dx1b.jpg" height="150"/>
+<img src="https://bunnyacademy.b-cdn.net/what-is-docker.png" height="150" display="span"/>
+<img src="https://miro.medium.com/v2/resize:fit:1400/0*rHiBrlitOsO_Dx1b.jpg" height="150" display="span"/>
 
 #### Authentication && Verification-Mailer: JWT (JSON Web Token), NodeMailer
 
