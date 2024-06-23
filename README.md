@@ -135,34 +135,42 @@ By leveraging the Online Judge System and its one-on-one competition feature, us
 
 ## Architecture
 
-<img src="https://drive.google.com/uc?export=view&id=1hKjyOEwUuYxuGD2Kjhp_DpcbKTTlQzXO
-" />
+<img src="https://github.com/ranaprabal/assets/blob/main/architecture.png" />
 
 ## Usage
 
 ### 1. User Registration and Login: Users can register and log in to the platform.
 
-<img src="https://drive.google.com/file/d/1WBu0_MsNFHIYBVKe6f-1AT2vxUzthnqC/view?usp=drive_link"  width="250"/>
+<p>
+  
+<img src="https://github.com/ranaprabal/assets/blob/main/home.png"  width="250"/>
 
-<img src="https://drive.google.com/file/d/12btpS1B7Pq0a0cWgI3qgBhDo2Q2Xipck/view?usp=drive_link"  width="250"/>
+<img src="https://github.com/ranaprabal/assets/blob/main/signup.png"  width="250"/>
+</p>
 
 ### 2. Problems Related Pages: Problem Setters can create problems.
+<p>
+  
+<img src="https://github.com/ranaprabal/assets/blob/main/allproblems.png"  width="250"/>
 
-<img src="https://drive.google.com/file/d/1NpyMUiM6Cvivpw5-ggvy0emm7FgSqVgm/view?usp=drive_link"  width="250"/>
-
-<img src="https://drive.google.com/file/d/1wYyJZhvdWXx6KnaaF3SztWY406MQozY6/view?usp=drive_link"  width="250"/>
+<img src="https://github.com/ranaprabal/assets/blob/main/createProblem.png"  width="250"/>
+</p>
 
 ### 3. Code Submission: Users can submit their code for problems, which will be compiled and executed.
+<p>
+  
+<img src="https://github.com/ranaprabal/assets/blob/main/problempage.png"  width="250"/>
 
-<img src="https://drive.google.com/file/d/1omSliZZgr2RyzUTpOSLt-jwpW4epCN-o/view?usp=drive_link"  width="250"/>
-
-<img src="https://drive.google.com/file/d/1f1uWZq9Sk1ZjlOKghtqKBmO_xXFMwML2/view?usp=drive_link"  width="250"/>
+<img src="https://github.com/ranaprabal/assets/blob/main/verdict.png"  width="250"/>
+</p>
 
 ### 4. One vs One Competitions:.
+<p>
+  
+<img src="https://github.com/ranaprabal/assets/blob/main/allcompetitions.png"  width="250"/>
 
-<img src="https://drive.google.com/file/d/1bvIQjj5u3ETVJye0tHgMH3cPdPK51-hY/view?usp=drive_link"  width="250"/>
-
-<img src="https://drive.google.com/file/d/149BbLbN_s6XjxA8WcMXmvZaJTeKwKPqY/view?usp=drive_link"  width="250"/>
+<img src="https://github.com/ranaprabal/assets/blob/main/competitionPage.png"  width="250"/>
+</p>
 
 ## LICENSE
 
