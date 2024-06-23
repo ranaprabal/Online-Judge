@@ -135,7 +135,8 @@ By leveraging the Online Judge System and its one-on-one competition feature, us
 
 ## Architecture
 
-<img src="https://drive.google.com/file/d/1hKjyOEwUuYxuGD2Kjhp_DpcbKTTlQzXO/view?usp=drive_link" />
+<img src="https://drive.google.com/uc?export=view&id=1hKjyOEwUuYxuGD2Kjhp_DpcbKTTlQzXO
+" />
 
 ## Usage
 
