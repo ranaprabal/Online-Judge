@@ -15,30 +15,35 @@ CodeJury is a comprehensive platform built using the MERN stack (MongoDB, Expres
 ## Technologies Used
 
 #### Frontend: React, Axios, jwt-Decode,
-
+<p>
 <img src="https://www.patterns.dev/img/reactjs/react-logo@3x.svg" height="150" />
 <img src="https://files.raycast.com/ae0ycnzbe4rs6h1vf7cfdcvt6zea" height="150" />
+</p>
 
 #### Backend: Node.js, Express, Mongoose
 
-<img src="https://www.tshirtgeek.com.br/wp-content/uploads/2021/03/com017.jpg" height="150"/>
+<p>
 <img src="https://miro.medium.com/v2/resize:fit:1400/1*23BkSGzcN3cBxvTuf0zFfg.png" height="150"/>
 <img src="https://miro.medium.com/v2/resize:fit:1400/1*rL8Buu7o6jnG-TYV1WubeQ.png" height="150"/>
+</p>
 
 #### Containerization && Database: Docker, MongoDB
-
+<p>
 <img src="https://bunnyacademy.b-cdn.net/what-is-docker.png" height="150" display="span"/>
 <img src="https://miro.medium.com/v2/resize:fit:1400/0*rHiBrlitOsO_Dx1b.jpg" height="150" display="span"/>
+</p>
 
 #### Authentication && Verification-Mailer: JWT (JSON Web Token), NodeMailer
-
+<p>
 <img src="https://miro.medium.com/v2/resize:fit:800/0*WddOBoMIYbSPNGSD.png" height="150"/>
 <img src="https://repository-images.githubusercontent.com/1272424/d1995000-0ab7-11ea-8ed3-04a082c36b0d" height="150"/>
+</p>
 
 #### Deployment: Docker, AWS EC2, ECR ,Vercel
-
+<p>
 <img src="https://yt3.googleusercontent.com/HRJKaJg70sqBrCNh7Tf2RSjXTb_5hCUn7Hht7mxUJMg77EWkihh55JklD-KhwAMhwY31ox5O=s900-c-k-c0x00ffffff-no-rj" height="150"  />
 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnwKWbAmgEz-7DSGmt1kYkpSiOTEkdHJez7w&s" height="150"  />
+</p>
 
 ## Installation
 
